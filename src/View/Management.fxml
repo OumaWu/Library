@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <bottom>
       <HBox spacing="10.0" BorderPane.alignment="CENTER">
          <children>
@@ -47,11 +46,38 @@
       </VBox>
    </top>
    <center>
-      <TableView prefHeight="300.0" BorderPane.alignment="CENTER">
-        <columns>
-          <TableColumn maxWidth="120.0" minWidth="-1.0" prefWidth="75.0" text="C1" />
-          <TableColumn maxWidth="120.0" minWidth="-1.0" prefWidth="75.0" text="C2" />
-        </columns>
-      </TableView>
+      <TabPane minHeight="250.0" minWidth="300.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="Books">
+               <content>
+                  <TableView>
+                    <columns>
+                      <TableColumn maxWidth="120.0" minWidth="75.0" prefWidth="-1.0" text="C1" />
+                      <TableColumn maxWidth="120.0" minWidth="75.0" prefWidth="-1.0" text="C2" />
+                    </columns>
+                  </TableView>
+               </content>
+            </Tab>
+          <Tab text="Customers">
+               <content>
+                  <TableView>
+                     <columns>
+                        <TableColumn maxWidth="120.0" minWidth="75.0" prefWidth="-1.0" text="C1" />
+                        <TableColumn maxWidth="120.0" minWidth="75.0" prefWidth="-1.0" text="C2" />
+                     </columns>
+                  </TableView>
+               </content></Tab>
+            <Tab text="Reservations">
+               <content>
+                  <TableView>
+                     <columns>
+                        <TableColumn maxWidth="120.0" minWidth="-1.0" prefWidth="75.0" text="C1" />
+                        <TableColumn maxWidth="120.0" minWidth="-1.0" prefWidth="75.0" text="C2" />
+                     </columns>
+                  </TableView>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
    </center>
 </BorderPane>
