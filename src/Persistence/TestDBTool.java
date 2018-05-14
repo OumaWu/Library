@@ -31,6 +31,87 @@ public class TestDBTool {
 		// Test insert method : success
 		// insertTest();
 
+		// Test update method : success
+		// updateTest();
+
+		// Test update method2 : success
+		// updateTest2();
+
+		// Test select method : success
+		// try {
+		// selectTest();
+		// } catch (SQLException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+
+		// Test delete method :
+		// deleteTest();
+	}
+
+	public static void deleteTest() {
+		try {
+			DBTool.getConnection(DBTool.MYSQL, server, db, usr, pwd);
+			boolean res = DBTool.delete("customers", "WHERE lastname = 'Kim'");
+
+			if (res)
+				System.out.println("Delete with success !");
+			else
+				System.out.println("Delete failed !");
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public static void updateTest2() {
+
+		HashMap<String, String> values = new HashMap<String, String>();
+		HashMap<String, String> where = new HashMap<String, String>();
+
+		values.put("firstname", "SanPang");
+		values.put("lastname", "JIN");
+		where.put("lastname", "Kim");
+		where.put("firstname", "Jong-un");
+
+		try {
+			DBTool.getConnection(DBTool.MYSQL, server, db, usr, pwd);
+			boolean res = DBTool.update("customers", values, where);
+
+			if (res)
+				System.out.println("Update with success !");
+			else
+				System.out.println("Update failed !");
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public static void updateTest() {
+
+		HashMap<String, String> values = new HashMap<String, String>();
+		HashMap<String, String> where = new HashMap<String, String>();
+
+		values.put("firstname", "Jong-un");
+		values.put("lastname", "Kim");
+		where.put("id", "00005");
+
+		try {
+			DBTool.getConnection(DBTool.MYSQL, server, db, usr, pwd);
+			boolean res = DBTool.update("customers", values, where);
+
+			if (res)
+				System.out.println("Update with success !");
+			else
+				System.out.println("Update failed !");
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public static void insertTest() {
@@ -55,6 +136,35 @@ public class TestDBTool {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public static void selectTest() throws SQLException {
+
+		DBTool.getConnection(DBTool.MYSQL, server, db, usr, pwd);
+		String[] columns = { "lastname", "firstname" };
+
+		ResultSet rs = DBTool.select("customers", columns, "WHERE lastname like 'Kim'");
+		ResultSetMetaData rsmd = rs.getMetaData();
+		int columnsNumber = rsmd.getColumnCount();
+
+		for (int i = 1; i <= columnsNumber; i++) {
+			if (i > 1)
+				System.out.print("  ");
+			System.out.print(rsmd.getColumnName(i));
+		}
+
+		System.out.println("");
+
+		while (rs.next()) {
+
+			for (int i = 1; i <= columnsNumber; i++) {
+				if (i > 1)
+					System.out.print("\t");
+				System.out.print(rs.getString(i));
+			}
+			System.out.println("");
+		}
+		DBTool.closeConnection();
 	}
 
 	public static void selectAllTest() throws SQLException {

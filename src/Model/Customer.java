@@ -112,4 +112,7 @@ public class Customer {
 		return true;
 	}
 
+	public int getIntId() {
+		return Integer.parseInt(this.id);
+	}
 }

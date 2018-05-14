@@ -8,13 +8,33 @@ import java.util.List;
 public class Library implements Cloneable, Iterable<Book> {
 
 	private List<Book> books;
+	private static List<Customer> customers;
+	private List<Reservation> reservation;
 
 	public Library() {
 		this.books = new ArrayList<Book>();
+		this.setCustomers(new ArrayList<Customer>());
+		this.setReservation(new ArrayList<Reservation>());
 	}
 
 	public Library(List<Book> books) {
 		this.books = books;
+	}
+
+	public List<Customer> getCustomers() {
+		return customers;
+	}
+
+	public void setCustomers(List<Customer> customers) {
+		this.customers = customers;
+	}
+
+	public List<Reservation> getReservation() {
+		return reservation;
+	}
+
+	public void setReservation(List<Reservation> reservation) {
+		this.reservation = reservation;
 	}
 
 	public List<Book> getBooks() {
@@ -63,6 +83,35 @@ public class Library implements Cloneable, Iterable<Book> {
 	}
 
 	/**
+	 * find the last id of customers
+	 * 
+	 * @return lastId
+	 */
+	public static String findNextCustomerId() {
+		int lastId = 0;
+		for (Customer customer : customers) {
+			if (lastId < customer.getIntId())
+				lastId = customer.getIntId();
+		}
+		return convertId(lastId + 1);
+	}
+
+	/**
+	 * Convert an int id to database format
+	 * 
+	 * @param nextId
+	 * @return StringId
+	 */
+	private static String convertId(int nextId) {
+		String id = String.valueOf(nextId);
+		int zeros = 5 - String.valueOf(nextId).length();
+		for (int i = 0; i < zeros; i++) {
+			id = ("0" + id);
+		}
+		return id;
+	}
+
+	/**
 	 * recherche de documents par titre
 	 * 
 	 * @param title
@@ -105,6 +154,7 @@ public class Library implements Cloneable, Iterable<Book> {
 	@Override
 	public Library clone() {
 		Library clone = new Library();
+
 		for (Book book : books) {
 			clone.books.add(book.clone());
 		}
