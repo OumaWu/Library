@@ -22,10 +22,10 @@ public class ReservationCRUD {
 	}
 
 	// Retrive customers' information from database and return a list
-	public List<Reservation> retrieveCustomers() throws SQLException {
+	public List<Reservation> retrieveReservations() throws SQLException {
 
 		DBTool.getConnection(dbType, server, db, usr, pwd);
-		ResultSet rs = DBTool.selectAll("customers");
+		ResultSet rs = DBTool.selectAll("book_reservations");
 		reservations.clear();
 
 		while (rs.next()) {
@@ -35,6 +35,7 @@ public class ReservationCRUD {
 			reservation.setCustomerId(rs.getString("customer_id"));
 			reservation.setBookDate(rs.getDate("book_date"));
 			reservation.setReturnDate(rs.getDate("return_date"));
+			reservation.setReturned(rs.getBoolean("returned"));
 			reservations.add(reservation);
 		}
 		DBTool.closeConnection();

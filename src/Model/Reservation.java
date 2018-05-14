@@ -8,6 +8,7 @@ public class Reservation {
 	private String customerId;
 	private Date bookDate;
 	private Date returnDate;
+	private boolean returned;
 
 	public Reservation() {
 	}
@@ -19,6 +20,17 @@ public class Reservation {
 		this.customerId = customerId;
 		this.bookDate = bookDate;
 		this.returnDate = returnDate;
+		this.setReturned(false);
+	}
+
+	public Reservation(String id, String bookId, String customerId, Date bookDate, Date returnDate, boolean returned) {
+		super();
+		this.id = id;
+		this.bookId = bookId;
+		this.customerId = customerId;
+		this.bookDate = bookDate;
+		this.returnDate = returnDate;
+		this.setReturned(returned);
 	}
 
 	/**
@@ -94,6 +106,14 @@ public class Reservation {
 	 */
 	public void setReturnDate(Date returnDate) {
 		this.returnDate = returnDate;
+	}
+
+	public boolean isReturned() {
+		return returned;
+	}
+
+	public void setReturned(boolean returned) {
+		this.returned = returned;
 	}
 
 }

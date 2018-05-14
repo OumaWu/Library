@@ -11,6 +11,7 @@ import Model.Reservation;
 import Persistence.BookCRUD;
 import Persistence.CustomerCRUD;
 import Persistence.DBTool;
+import Persistence.ReservationCRUD;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
@@ -28,6 +29,7 @@ public class ManagementController implements Initializable {
 	// Database operation classes
 	private static CustomerCRUD customerCRUD;
 	private static BookCRUD bookCRUD;
+	private static ReservationCRUD reservationCRUD;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -40,10 +42,12 @@ public class ManagementController implements Initializable {
 
 		bookCRUD = new BookCRUD(dbType, server, db, usr, pwd);
 		customerCRUD = new CustomerCRUD(dbType, server, db, usr, pwd);
+		reservationCRUD = new ReservationCRUD(dbType, server, db, usr, pwd);
 
 		try {
 			library = new Library(bookCRUD.retrieveBooks());
 			library.setCustomers(customerCRUD.retrieveCustomers());
+			library.setReservation(reservationCRUD.retrieveReservations());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -66,7 +70,7 @@ public class ManagementController implements Initializable {
 	@FXML
 	private TableColumn<Book, String> bidColumn, titleColumn, authorColumn, categoryColumn, availabilityColumn;
 	@FXML
-	private TableColumn<Reservation, String> ridColumn, rbidColumn, rcidnColumn, bDate, rDate;
+	private TableColumn<Reservation, String> ridColumn, rbidColumn, rcidnColumn, bDate, rDate, stateColumn;
 
 	public void initialiseCustomersTable() {
 
@@ -91,13 +95,15 @@ public class ManagementController implements Initializable {
 	}
 
 	public void initialiseReservationTable() {
-		// if (reservationTable.getItems().isEmpty()) {
-		// ridColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-		// fnColumn.setCellValueFactory(new
-		// PropertyValueFactory<>("firstName"));
-		// lnColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-		// customersTable.getItems().addAll(library.getCustomers());
-		// }
+		if (reservationTable.getItems().isEmpty()) {
+			ridColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+			rbidColumn.setCellValueFactory(new PropertyValueFactory<>("bookId"));
+			rcidnColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+			bDate.setCellValueFactory(new PropertyValueFactory<>("bookDate"));
+			rDate.setCellValueFactory(new PropertyValueFactory<>("returnDate"));
+			stateColumn.setCellValueFactory(new PropertyValueFactory<>("returned"));
+			reservationTable.getItems().addAll(library.getReservation());
+		}
 	}
 
 	// Open the management window

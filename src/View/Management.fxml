@@ -77,9 +77,10 @@
                      <columns>
                         <TableColumn fx:id="ridColumn" maxWidth="120.0" minWidth="-1.0" prefWidth="56.0" text="Id" />
                         <TableColumn fx:id="rbidColumn" maxWidth="120.0" minWidth="-1.0" prefWidth="94.0" text="Book_id" />
-                        <TableColumn fx:id="rcidnColumn" prefWidth="117.0" text="Customer_id" />
-                        <TableColumn fx:id="bDate" prefWidth="123.0" text="Book_date" />
-                        <TableColumn fx:id="rDate" prefWidth="122.0" text="Return_date" />
+                        <TableColumn fx:id="rcidnColumn" prefWidth="102.0" text="Customer_id" />
+                        <TableColumn fx:id="bDate" prefWidth="109.0" text="Book_date" />
+                        <TableColumn fx:id="rDate" prefWidth="114.0" text="Return_date" />
+                        <TableColumn fx:id="stateColumn" prefWidth="75.0" text="Returned" />
                      </columns>
                   </TableView>
                </content>
