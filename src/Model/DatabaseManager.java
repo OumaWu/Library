@@ -4,6 +4,12 @@ import Persistence.BookCRUD;
 import Persistence.CustomerCRUD;
 import Persistence.ReservationCRUD;
 
+/**
+ * Proxy Pattern class
+ * 
+ * @author SONY
+ *
+ */
 public class DatabaseManager {
 
 	private final static DatabaseManager instance = new DatabaseManager();
