@@ -3,22 +3,30 @@ package Persistence;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import Model.Customer;
 
-public class CustomerCRUD {
+public class CustomerCRUD extends CRUDoperations {
 
-	private int dbType;
-	private String server, db, usr, pwd;
-	private static List<Customer> customers = new ArrayList<Customer>();
+	private static List<Customer> customers;
 
-	public CustomerCRUD(int dbType, String server, String db, String usr, String pwd) {
-		this.dbType = dbType;
-		this.server = server;
-		this.db = db;
-		this.usr = usr;
-		this.pwd = pwd;
+	public CustomerCRUD() {
+		customers = new ArrayList<Customer>();
+	}
+
+	public boolean insertCustomer(Customer customer) throws SQLException {
+		boolean result = false;
+		HashMap<String, String> values = new HashMap<String, String>();
+		values.put("id", customer.getId());
+		values.put("firstname", customer.getFirstName());
+		values.put("lastname", customer.getLastName());
+
+		DBTool.getConnection(dbType, server, db, usr, pwd);
+		result = DBTool.insert("customers", values);
+		DBTool.closeConnection();
+		return result;
 	}
 
 	// Retrive customers' information from database and return a list

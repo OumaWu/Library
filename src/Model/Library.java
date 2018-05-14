@@ -8,7 +8,7 @@ import java.util.List;
 public class Library implements Cloneable, Iterable<Book> {
 
 	private List<Book> books;
-	private List<Customer> customers;
+	private static List<Customer> customers;
 	private List<Reservation> reservation;
 
 	public Library() {
@@ -80,6 +80,35 @@ public class Library implements Cloneable, Iterable<Book> {
 	 */
 	public boolean removeAll(List<Book> books) {
 		return this.books.removeAll(books);
+	}
+
+	/**
+	 * find the last id of customers
+	 * 
+	 * @return lastId
+	 */
+	public static String findNextCustomerId() {
+		int lastId = 0;
+		for (Customer customer : customers) {
+			if (lastId < customer.getIntId())
+				lastId = customer.getIntId();
+		}
+		return convertId(lastId + 1);
+	}
+
+	/**
+	 * Convert an int id to database format
+	 * 
+	 * @param nextId
+	 * @return StringId
+	 */
+	private static String convertId(int nextId) {
+		String id = String.valueOf(nextId);
+		int zeros = 5 - String.valueOf(nextId).length();
+		for (int i = 0; i < zeros; i++) {
+			id = ("0" + id);
+		}
+		return id;
 	}
 
 	/**

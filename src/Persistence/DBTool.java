@@ -132,7 +132,9 @@ public class DBTool {
 		insertStmt += " (" + String.join(",", values.keySet()) + ")";
 
 		// Add the values to the statement
-		insertStmt += "VALUES ('" + String.join("','", values.values()) + "')";
+		insertStmt += " VALUES ('" + String.join("','", values.values()) + "')";
+
+		System.out.println(insertStmt);
 
 		try {
 			conn.setAutoCommit(false);

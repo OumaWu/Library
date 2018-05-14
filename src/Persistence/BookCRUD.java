@@ -10,18 +10,12 @@ import Model.Magazine;
 import Model.Manuel;
 import Model.Novel;
 
-public class BookCRUD {
+public class BookCRUD extends CRUDoperations {
 
-	private int dbType;
-	private String server, db, usr, pwd;
-	private static List<Book> books = new ArrayList<Book>();
+	private static List<Book> books;
 
-	public BookCRUD(int dbType, String server, String db, String usr, String pwd) {
-		this.dbType = dbType;
-		this.server = server;
-		this.db = db;
-		this.usr = usr;
-		this.pwd = pwd;
+	public BookCRUD() {
+		books = new ArrayList<Book>();
 	}
 
 	// Retrive books' list from database

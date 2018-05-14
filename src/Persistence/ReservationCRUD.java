@@ -7,18 +7,12 @@ import java.util.List;
 
 import Model.Reservation;
 
-public class ReservationCRUD {
+public class ReservationCRUD extends CRUDoperations {
 
-	private int dbType;
-	private String server, db, usr, pwd;
-	private static List<Reservation> reservations = new ArrayList<Reservation>();
+	private static List<Reservation> reservations;
 
-	public ReservationCRUD(int dbType, String server, String db, String usr, String pwd) {
-		this.dbType = dbType;
-		this.server = server;
-		this.db = db;
-		this.usr = usr;
-		this.pwd = pwd;
+	public ReservationCRUD() {
+		reservations = new ArrayList<Reservation>();
 	}
 
 	// Retrive customers' information from database and return a list

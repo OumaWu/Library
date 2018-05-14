@@ -42,7 +42,7 @@ public class LoginController implements Initializable {
 	}
 
 	@FXML
-	public void exit() {
+	public void close() {
 		((Stage) this.vBox.getScene().getWindow()).close();
 	}
 
@@ -60,7 +60,7 @@ public class LoginController implements Initializable {
 			stage.setScene(new Scene(root));
 			stage.show();
 			// Close the current window
-			this.exit();
+			this.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Error ! Open failed !!");

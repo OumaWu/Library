@@ -13,8 +13,8 @@
             <ComboBox prefWidth="150.0" />
             <Button mnemonicParsing="false" text="Display" />
             <Region HBox.hgrow="ALWAYS" />
-            <Button mnemonicParsing="false" text="Delete" />
-            <Button mnemonicParsing="false" text="Add" />
+            <Button fx:id="btDelete" mnemonicParsing="false" prefWidth="70.0" text="Delete" />
+            <Button fx:id="btAdd" mnemonicParsing="false" onAction="#openWindow" prefWidth="70.0" text="Add" />
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -31,6 +31,7 @@
                   <Region HBox.hgrow="ALWAYS" />
                   <Label prefHeight="30.0" text="By" />
                   <ComboBox promptText="Select a category" />
+                  <Button fx:id="btSearch" mnemonicParsing="false" text="Go" />
                </children>
                <VBox.margin>
                   <Insets />
