@@ -2,13 +2,13 @@ package Model;
 
 public class Novel extends Book {
 
-	public Novel(String id, String title, String author) {
-		super(id, title, author);
+	public Novel(String id, String title, String author, boolean availability) {
+		super(id, title, author, availability);
 	}
 
 	@Override
 	public Book clone() {
-		return new Novel(getId(), getTitle(), getAuthor());
+		return new Novel(getId(), getTitle(), getAuthor(), isAvailability());
 	}
 
 	@Override

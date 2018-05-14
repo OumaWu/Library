@@ -1,13 +1,12 @@
 package Persistence;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
-
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.Statement;
 
 public class DBTool {
 	public static final int MYSQL = 1;
@@ -18,7 +17,6 @@ public class DBTool {
 	private static Connection conn;
 	private static Statement stmt;
 	private static PreparedStatement pstmt;
-	private static ResultSet res;
 
 	private DBTool(int dbType) throws Exception {
 
@@ -158,6 +156,8 @@ public class DBTool {
 	}
 
 	public static ResultSet select(String table, String[] columns, String where) throws SQLException {
+
+		ResultSet res = null;
 		String selectStmt = "SELECT ";
 		selectStmt += String.join(", ", columns);
 		selectStmt += " FROM " + table;
@@ -166,8 +166,8 @@ public class DBTool {
 		System.out.println(selectStmt);
 
 		try {
-			pstmt = conn.prepareStatement(selectStmt);
-			res = pstmt.executeQuery(selectStmt);
+			stmt = conn.createStatement();
+			res = stmt.executeQuery(selectStmt);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -183,11 +183,12 @@ public class DBTool {
 	 */
 	public static ResultSet selectAll(String table) throws SQLException {
 
+		ResultSet res = null;
 		String selectStmt = "SELECT * FROM " + table;
 
 		try {
-			pstmt = conn.prepareStatement(selectStmt);
-			res = pstmt.executeQuery(selectStmt);
+			stmt = conn.createStatement();
+			res = stmt.executeQuery(selectStmt);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -200,8 +201,6 @@ public class DBTool {
 	 */
 	public static void closeConnection() {
 		try {
-			if (res != null)
-				res.close();
 			if (pstmt != null)
 				pstmt.close();
 			if (stmt != null)

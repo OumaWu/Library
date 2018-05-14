@@ -4,16 +4,19 @@ import java.sql.Date;
 
 public class Reservation {
 	private String id;
-	private Book book;
-	private Customer customer;
+	private String bookId;
+	private String customerId;
 	private Date bookDate;
 	private Date returnDate;
 
-	public Reservation(String id, Book book, Customer customer, Date bookDate, Date returnDate) {
+	public Reservation() {
+	}
+
+	public Reservation(String id, String bookId, String customerId, Date bookDate, Date returnDate) {
 		super();
 		this.id = id;
-		this.book = book;
-		this.customer = customer;
+		this.bookId = bookId;
+		this.customerId = customerId;
 		this.bookDate = bookDate;
 		this.returnDate = returnDate;
 	}
@@ -34,33 +37,33 @@ public class Reservation {
 	}
 
 	/**
-	 * @return the book
+	 * @return the bookId
 	 */
-	public Book getBook() {
-		return book;
+	public String getBookId() {
+		return bookId;
 	}
 
 	/**
 	 * @param book
-	 *            the book to set
+	 *            the bookId to set
 	 */
-	public void setBook(Book book) {
-		this.book = book;
+	public void setBookId(String bookId) {
+		this.bookId = bookId;
 	}
 
 	/**
-	 * @return the customer
+	 * @return the customerId
 	 */
-	public Customer getCustomer() {
-		return customer;
+	public String getCustomerId() {
+		return customerId;
 	}
 
 	/**
-	 * @param customer
-	 *            the customer to set
+	 * @param customerId
+	 *            the customerId to set
 	 */
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
 	}
 
 	/**

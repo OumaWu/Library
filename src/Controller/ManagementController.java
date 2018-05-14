@@ -8,6 +8,9 @@ import Model.Book;
 import Model.Customer;
 import Model.Library;
 import Model.Reservation;
+import Persistence.BookCRUD;
+import Persistence.CustomerCRUD;
+import Persistence.DBTool;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
@@ -17,24 +20,47 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class ManagementController implements Initializable {
 
+	// Database configuration parameters
+	private static int dbType;
+	private static String server, db, usr, pwd;
+	// Library instance
+	private static Library library;
+	// Database operation classes
+	private static CustomerCRUD customerCRUD;
+	private static BookCRUD bookCRUD;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
+		dbType = DBTool.MYSQL;
+		server = "localhost";
+		db = "library";
+		usr = "root";
+		pwd = "111";
+
+		bookCRUD = new BookCRUD(dbType, server, db, usr, pwd);
+		customerCRUD = new CustomerCRUD(dbType, server, db, usr, pwd);
+
 		try {
-			library.retriveCustomer();
+			library = new Library(bookCRUD.retrieveBooks());
+			library.setCustomers(customerCRUD.retrieveCustomers());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		initialiseBooksTable();
 		System.out.println("Management page is now loaded!");
 	}
 
-	private static Library library = new Library();
 	@FXML
-	private Tab customersTab;
+	private Tab customersTab, booksTab, reservationTab;
 
 	@FXML
-	private TableView<Customer> customersTable, booksTable, reservationTable;
+	private TableView<Customer> customersTable;
+	@FXML
+	private TableView<Book> booksTable;
+	@FXML
+	private TableView<Reservation> reservationTable;
 	@FXML
 	private TableColumn<Customer, String> cidColumn, fnColumn, lnColumn;
 	@FXML
@@ -43,6 +69,7 @@ public class ManagementController implements Initializable {
 	private TableColumn<Reservation, String> ridColumn, rbidColumn, rcidnColumn, bDate, rDate;
 
 	public void initialiseCustomersTable() {
+
 		if (customersTable.getItems().isEmpty()) {
 			cidColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 			fnColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
@@ -52,21 +79,25 @@ public class ManagementController implements Initializable {
 	}
 
 	public void initialiseBooksTable() {
+
 		if (booksTable.getItems().isEmpty()) {
 			bidColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-			fnColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-			lnColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-			customersTable.getItems().addAll(library.getCustomers());
+			titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+			authorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
+			categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
+			availabilityColumn.setCellValueFactory(new PropertyValueFactory<>("availability"));
+			booksTable.getItems().addAll(library.getBooks());
 		}
 	}
 
 	public void initialiseReservationTable() {
-		if (reservationTable.getItems().isEmpty()) {
-			ridColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-			fnColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-			lnColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-			customersTable.getItems().addAll(library.getCustomers());
-		}
+		// if (reservationTable.getItems().isEmpty()) {
+		// ridColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+		// fnColumn.setCellValueFactory(new
+		// PropertyValueFactory<>("firstName"));
+		// lnColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+		// customersTable.getItems().addAll(library.getCustomers());
+		// }
 	}
 
 	// Open the management window

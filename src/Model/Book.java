@@ -2,22 +2,18 @@ package Model;
 
 public abstract class Book implements Comparable<Book>, Cloneable {
 
-	private static int compteur = 1;
-
 	private String id;
 	private String title;
 	private String author;
+	private String category;
+	private boolean availability;
 
-	public Book() {
-		this.author = "";
-		this.id = "";
-		this.title = "";
-	}
-
-	public Book(String id, String title, String author) {
+	public Book(String id, String title, String author, boolean availability) {
 		this.author = author;
 		this.id = id;
 		this.title = title;
+		this.category = this.getClass().getSimpleName();
+		this.availability = availability;
 	}
 
 	/**
@@ -63,6 +59,22 @@ public abstract class Book implements Comparable<Book>, Cloneable {
 	 */
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public boolean isAvailability() {
+		return availability;
+	}
+
+	public void setAvailability(boolean availability) {
+		this.availability = availability;
 	}
 
 	@Override

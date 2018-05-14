@@ -46,11 +46,11 @@
       </VBox>
    </top>
    <center>
-      <TabPane minHeight="250.0" minWidth="300.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+      <TabPane tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
-          <Tab text="Books">
+          <Tab fx:id="booksTab" onSelectionChanged="#initialiseBooksTable" text="Books">
                <content>
-                  <TableView>
+                  <TableView fx:id="booksTable">
                     <columns>
                       <TableColumn fx:id="bidColumn" maxWidth="120.0" minWidth="75.0" prefWidth="-1.0" text="Id" />
                       <TableColumn fx:id="titleColumn" maxWidth="120.0" minWidth="75.0" prefWidth="-1.0" text="Title" />
@@ -61,7 +61,7 @@
                   </TableView>
                </content>
             </Tab>
-          <Tab fx:id="customersTab" onSelectionChanged="#initialiseCustomerTable" text="Customers">
+          <Tab fx:id="customersTab" onSelectionChanged="#initialiseCustomersTable" text="Customers">
                <content>
                   <TableView fx:id="customersTable">
                      <columns>
@@ -71,9 +71,9 @@
                      </columns>
                   </TableView>
                </content></Tab>
-            <Tab text="Reservations">
+            <Tab fx:id="reservationTab" onSelectionChanged="#initialiseReservationTable" text="Reservations">
                <content>
-                  <TableView>
+                  <TableView fx:id="reservationTable">
                      <columns>
                         <TableColumn fx:id="ridColumn" maxWidth="120.0" minWidth="-1.0" prefWidth="56.0" text="Id" />
                         <TableColumn fx:id="rbidColumn" maxWidth="120.0" minWidth="-1.0" prefWidth="94.0" text="Book_id" />
