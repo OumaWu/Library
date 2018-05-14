@@ -52,8 +52,11 @@
                <content>
                   <TableView>
                     <columns>
-                      <TableColumn maxWidth="120.0" minWidth="75.0" prefWidth="-1.0" text="C1" />
-                      <TableColumn maxWidth="120.0" minWidth="75.0" prefWidth="-1.0" text="C2" />
+                      <TableColumn fx:id="bidColumn" maxWidth="120.0" minWidth="75.0" prefWidth="-1.0" text="Id" />
+                      <TableColumn fx:id="titleColumn" maxWidth="120.0" minWidth="75.0" prefWidth="-1.0" text="Title" />
+                        <TableColumn fx:id="authorColumn" prefWidth="100.0" text="Author" />
+                        <TableColumn fx:id="categoryColumn" prefWidth="100.0" text="Category" />
+                        <TableColumn fx:id="availabilityColumn" prefWidth="100.0" text="Availability" />
                     </columns>
                   </TableView>
                </content>
@@ -62,7 +65,7 @@
                <content>
                   <TableView fx:id="customersTable">
                      <columns>
-                        <TableColumn fx:id="idColumn" maxWidth="120.0" minWidth="75.0" prefWidth="-1.0" text="Id" />
+                        <TableColumn fx:id="cidColumn" maxWidth="120.0" minWidth="75.0" prefWidth="-1.0" text="Id" />
                         <TableColumn fx:id="fnColumn" maxWidth="150.0" minWidth="100.0" prefWidth="-1.0" text="Firstname" />
                         <TableColumn fx:id="lnColumn" maxWidth="150.0" minWidth="120.0" prefWidth="-1.0" text="Lastname" />
                      </columns>
@@ -72,8 +75,11 @@
                <content>
                   <TableView>
                      <columns>
-                        <TableColumn maxWidth="120.0" minWidth="-1.0" prefWidth="75.0" text="C1" />
-                        <TableColumn maxWidth="120.0" minWidth="-1.0" prefWidth="75.0" text="C2" />
+                        <TableColumn fx:id="ridColumn" maxWidth="120.0" minWidth="-1.0" prefWidth="56.0" text="Id" />
+                        <TableColumn fx:id="rbidColumn" maxWidth="120.0" minWidth="-1.0" prefWidth="94.0" text="Book_id" />
+                        <TableColumn fx:id="rcidnColumn" prefWidth="117.0" text="Customer_id" />
+                        <TableColumn fx:id="bDate" prefWidth="123.0" text="Book_date" />
+                        <TableColumn fx:id="rDate" prefWidth="122.0" text="Return_date" />
                      </columns>
                   </TableView>
                </content>
