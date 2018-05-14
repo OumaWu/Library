@@ -33,6 +33,91 @@ public class DBTool {
 	}
 
 	/**
+	 * Delete Operation
+	 * 
+	 * @param table
+	 * @param where
+	 * @return boolean
+	 * @throws SQLException
+	 */
+	public static boolean delete(String table, String where) throws SQLException {
+		boolean result = false;
+
+		String deleteStmt = "DELETE FROM " + table;
+		deleteStmt += " " + where;
+
+		try {
+			conn.setAutoCommit(false);
+			pstmt = conn.prepareStatement(deleteStmt);
+			result = (pstmt.executeUpdate() > 0 ? true : false);
+			conn.commit();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			if (conn != null) {
+				System.err.print("Transaction is being rolled back");
+				conn.rollback();
+			}
+		} finally {
+			// conn.setAutoCommit(true);
+			closeConnection();
+		}
+
+		return result;
+	}
+
+	/**
+	 * Update operation
+	 * 
+	 * @param table
+	 * @param values
+	 * @return boolean
+	 * @throws SQLException
+	 */
+	public static boolean update(String table, HashMap<String, String> values, HashMap<String, String> where)
+			throws SQLException {
+		boolean result = false;
+
+		// Add the table name to the statement
+		String updateStmt = "UPDATE " + table + " SET ";
+
+		// Add the columns to the statement
+		updateStmt += String.join(" = ?, ", values.keySet()) + " = ? ";
+
+		// Where statement
+		updateStmt += "WHERE " + String.join(" = ? AND ", where.keySet()) + " = ?";
+
+		try {
+			conn.setAutoCommit(false);
+			pstmt = conn.prepareStatement(updateStmt);
+
+			// Bind values
+			int i = 1;
+			for (String value : values.values()) {
+				pstmt.setString(i++, value);
+			}
+			for (String value : where.values()) {
+				pstmt.setString(i++, value);
+			}
+
+			result = (pstmt.executeUpdate() > 0 ? true : false);
+			conn.commit();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			if (conn != null) {
+				System.err.print("Transaction is being rolled back");
+				conn.rollback();
+			}
+		} finally {
+			// conn.setAutoCommit(true);
+			closeConnection();
+		}
+
+		return result;
+	}
+
+	/**
 	 * Insert operation
 	 * 
 	 * @return boolean
@@ -65,13 +150,28 @@ public class DBTool {
 				conn.rollback();
 			}
 		} finally {
-			if (pstmt != null) {
-				pstmt.close();
-			}
-			conn.setAutoCommit(true);
+			// conn.setAutoCommit(true);
+			closeConnection();
 		}
 
 		return result;
+	}
+
+	public static ResultSet select(String table, String[] columns, String where) throws SQLException {
+		String selectStmt = "SELECT ";
+		selectStmt += String.join(", ", columns);
+		selectStmt += " FROM " + table;
+		selectStmt += " " + where;
+
+		System.out.println(selectStmt);
+
+		try {
+			pstmt = conn.prepareStatement(selectStmt);
+			res = pstmt.executeQuery(selectStmt);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
 	}
 
 	/**
@@ -91,11 +191,7 @@ public class DBTool {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		// finally {
-		// if (pstmt != null) {
-		// pstmt.close();
-		// }
-		// }
+
 		return res;
 	}
 

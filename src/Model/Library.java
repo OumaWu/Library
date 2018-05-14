@@ -1,20 +1,41 @@
 package Model;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import Persistence.CustomerCRUD;
+import Persistence.DBTool;
+
 public class Library implements Cloneable, Iterable<Book> {
 
 	private List<Book> books;
+	private List<Customer> customers;
+	private List<Reservation> reservation;
 
 	public Library() {
 		this.books = new ArrayList<Book>();
+		this.setCustomers(new ArrayList<Customer>());
+		this.reservation = new ArrayList<Reservation>();
 	}
 
 	public Library(List<Book> books) {
 		this.books = books;
+	}
+
+	public void retriveCustomer() throws SQLException {
+		CustomerCRUD customerCRUD = new CustomerCRUD(DBTool.MYSQL, "localhost", "library", "root", "111");
+		this.setCustomers(customerCRUD.retrieveCustomers());
+	}
+
+	public List<Customer> getCustomers() {
+		return customers;
+	}
+
+	public void setCustomers(List<Customer> customers) {
+		this.customers = customers;
 	}
 
 	public List<Book> getBooks() {
@@ -105,6 +126,7 @@ public class Library implements Cloneable, Iterable<Book> {
 	@Override
 	public Library clone() {
 		Library clone = new Library();
+
 		for (Book book : books) {
 			clone.books.add(book.clone());
 		}

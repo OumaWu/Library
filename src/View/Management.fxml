@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ManagementController">
    <bottom>
       <HBox spacing="10.0" BorderPane.alignment="CENTER">
          <children>
@@ -58,12 +58,13 @@
                   </TableView>
                </content>
             </Tab>
-          <Tab text="Customers">
+          <Tab fx:id="customersTab" onSelectionChanged="#initialiseCustomerTable" text="Customers">
                <content>
-                  <TableView>
+                  <TableView fx:id="customersTable">
                      <columns>
-                        <TableColumn maxWidth="120.0" minWidth="75.0" prefWidth="-1.0" text="C1" />
-                        <TableColumn maxWidth="120.0" minWidth="75.0" prefWidth="-1.0" text="C2" />
+                        <TableColumn fx:id="idColumn" maxWidth="120.0" minWidth="75.0" prefWidth="-1.0" text="Id" />
+                        <TableColumn fx:id="fnColumn" maxWidth="150.0" minWidth="100.0" prefWidth="-1.0" text="Firstname" />
+                        <TableColumn fx:id="lnColumn" maxWidth="150.0" minWidth="120.0" prefWidth="-1.0" text="Lastname" />
                      </columns>
                   </TableView>
                </content></Tab>

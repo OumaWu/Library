@@ -19,7 +19,7 @@ public class LoginController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		System.out.println("View is now loaded!");
+		System.out.println("Login page is now loaded!");
 	}
 
 	@FXML
@@ -67,9 +67,5 @@ public class LoginController implements Initializable {
 			e.printStackTrace();
 		}
 	}
-
-	// public void closeWindow() {
-	//
-	// }
 
 }
