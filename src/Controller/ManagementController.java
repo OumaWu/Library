@@ -4,8 +4,10 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import Model.Book;
 import Model.Customer;
 import Model.Library;
+import Model.Reservation;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
@@ -32,13 +34,35 @@ public class ManagementController implements Initializable {
 	private Tab customersTab;
 
 	@FXML
-	private TableView<Customer> customersTable;
+	private TableView<Customer> customersTable, booksTable, reservationTable;
 	@FXML
-	private TableColumn<Customer, String> idColumn, fnColumn, lnColumn;
+	private TableColumn<Customer, String> cidColumn, fnColumn, lnColumn;
+	@FXML
+	private TableColumn<Book, String> bidColumn, titleColumn, authorColumn, categoryColumn, availabilityColumn;
+	@FXML
+	private TableColumn<Reservation, String> ridColumn, rbidColumn, rcidnColumn, bDate, rDate;
 
-	public void initialiseCustomerTable() {
+	public void initialiseCustomersTable() {
 		if (customersTable.getItems().isEmpty()) {
-			idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+			cidColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+			fnColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+			lnColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+			customersTable.getItems().addAll(library.getCustomers());
+		}
+	}
+
+	public void initialiseBooksTable() {
+		if (booksTable.getItems().isEmpty()) {
+			bidColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+			fnColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+			lnColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+			customersTable.getItems().addAll(library.getCustomers());
+		}
+	}
+
+	public void initialiseReservationTable() {
+		if (reservationTable.getItems().isEmpty()) {
+			ridColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 			fnColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
 			lnColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
 			customersTable.getItems().addAll(library.getCustomers());
