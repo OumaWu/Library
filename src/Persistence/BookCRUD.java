@@ -3,6 +3,7 @@ package Persistence;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import Model.Book;
@@ -18,27 +19,29 @@ public class BookCRUD extends CRUDoperations {
 		books = new ArrayList<Book>();
 	}
 
-	// public boolean deleteCustomer(String id) throws SQLException {
-	// boolean result = false;
-	//
-	// DBTool.getConnection(dbType, server, db, usr, pwd);
-	// result = DBTool.delete("customers", "WHERE id = " + id);
-	// DBTool.closeConnection();
-	// return result;
-	// }
+	public boolean deleteBook(String id) throws SQLException {
+		boolean result = false;
 
-	// public boolean insertBook(Book book) throws SQLException {
-	// boolean result = false;
-	// HashMap<String, String> values = new HashMap<String, String>();
-	// values.put("id", customer.getId());
-	// values.put("firstname", customer.getFirstName());
-	// values.put("lastname", customer.getLastName());
-	//
-	// DBTool.getConnection(dbType, server, db, usr, pwd);
-	// result = DBTool.insert("customers", values);
-	// DBTool.closeConnection();
-	// return result;
-	// }
+		DBTool.getConnection(dbType, server, db, usr, pwd);
+		result = DBTool.delete("books", "WHERE id = " + id);
+		DBTool.closeConnection();
+		return result;
+	}
+
+	public boolean insertBook(Book book) throws SQLException {
+		boolean result = false;
+		HashMap<String, String> values = new HashMap<String, String>();
+		values.put("id", book.getId());
+		values.put("title", book.getTitle());
+		values.put("author", book.getAuthor());
+		values.put("category", book.getCategory());
+		values.put("availability", String.valueOf(book.getAvailability() ? 1 : 0));
+
+		DBTool.getConnection(dbType, server, db, usr, pwd);
+		result = DBTool.insert("books", values);
+		DBTool.closeConnection();
+		return result;
+	}
 
 	// Retrive book list from database
 	public List<Book> retrieveBooks() throws SQLException {

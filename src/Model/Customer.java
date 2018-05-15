@@ -1,6 +1,6 @@
 package Model;
 
-public class Customer {
+public class Customer implements Comparable<Customer> {
 
 	private String id;
 	private String firstName;
@@ -114,5 +114,10 @@ public class Customer {
 
 	public int getIntId() {
 		return Integer.parseInt(this.id);
+	}
+
+	@Override
+	public int compareTo(Customer o) {
+		return new Integer(getIntId()).compareTo(o.getIntId());
 	}
 }

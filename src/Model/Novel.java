@@ -6,9 +6,13 @@ public class Novel extends Book {
 		super(id, title, author, availability);
 	}
 
+	public Novel(String id, String title, String author) {
+		super(id, title, author);
+	}
+
 	@Override
 	public Book clone() {
-		return new Novel(getId(), getTitle(), getAuthor(), isAvailability());
+		return new Novel(getId(), getTitle(), getAuthor(), getAvailability());
 	}
 
 	@Override

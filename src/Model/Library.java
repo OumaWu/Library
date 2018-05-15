@@ -8,7 +8,7 @@ import java.util.List;
 public class Library implements Cloneable, Iterable<Book> {
 
 	private List<Book> books;
-	private static List<Customer> customers;
+	private List<Customer> customers;
 	private List<Reservation> reservations;
 
 	public Library() {
@@ -75,11 +75,28 @@ public class Library implements Cloneable, Iterable<Book> {
 		return this.books.remove(book);
 	}
 
+	public boolean remove(Customer customer) {
+		return this.customers.remove(customer);
+	}
+
+	public boolean remove(Reservation reservation) {
+		return this.reservations.remove(reservation);
+	}
+
 	/**
 	 * supprimer une liste de documents
 	 */
 	public boolean removeAll(List<Book> books) {
 		return this.books.removeAll(books);
+	}
+
+	public boolean isReserved(String id) {
+		boolean result = false;
+		for (Reservation re : this.reservations) {
+			if (id.equals(re.getBookId()))
+				result = true;
+		}
+		return result;
 	}
 
 	public boolean hasReservation(String id) {
@@ -92,11 +109,25 @@ public class Library implements Cloneable, Iterable<Book> {
 	}
 
 	/**
-	 * find the last id of customers
+	 * find the next id of books
 	 * 
-	 * @return lastId
+	 * @return lastId + 1
 	 */
-	public static String findNextCustomerId() {
+	public String findNextBookId() {
+		int lastId = 0;
+		for (Book book : books) {
+			if (lastId < book.getIntId())
+				lastId = book.getIntId();
+		}
+		return convertId(lastId + 1);
+	}
+
+	/**
+	 * find the next id of customers
+	 * 
+	 * @return lastId + 1
+	 */
+	public String findNextCustomerId() {
 		int lastId = 0;
 		for (Customer customer : customers) {
 			if (lastId < customer.getIntId())

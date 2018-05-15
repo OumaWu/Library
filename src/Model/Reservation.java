@@ -116,4 +116,8 @@ public class Reservation {
 		this.returned = returned;
 	}
 
+	public int getIntId() {
+		return Integer.parseInt(this.id);
+	}
+
 }

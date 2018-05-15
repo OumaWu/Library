@@ -12,17 +12,12 @@ import Model.Library;
 import Model.Reservation;
 import Persistence.DBTool;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 public class ManagementController implements Initializable {
 
@@ -67,8 +62,10 @@ public class ManagementController implements Initializable {
 
 	/**
 	 * Add button event handling
+	 * 
+	 * @throws SQLException
 	 */
-	public void openWindow() {
+	public void openWindow() throws SQLException {
 		if (customersTab.isSelected())
 			openCustomerEditWindow();
 
@@ -89,10 +86,33 @@ public class ManagementController implements Initializable {
 			deleteCustomer();
 
 		else if (booksTab.isSelected())
-			;
+			deleteBook();
 
 		else if (reservationTab.isSelected())
 			;
+	}
+
+	/**
+	 * Delete a row selected from the book table
+	 * 
+	 * @throws SQLException
+	 */
+	public void deleteBook() throws SQLException {
+
+		boolean result = false;
+		String id = booksTable.getSelectionModel().getSelectedItem().getId();
+
+		// Check if the customer's id is in the reservation list
+		if (library.isReserved(id)) {
+			WindowManager.getInstance().promptAlert("Error! The Book has reservation records, can't be deleted !");
+		} else {
+			result = DatabaseManager.bookCRUD.deleteBook(id);
+		}
+		if (result) {
+			library.remove(booksTable.getSelectionModel().getSelectedItem());
+			loadBooksTable();
+		}
+		WindowManager.getInstance().promptAlert("Delete book " + (result ? "with success !" : "failed !"));
 	}
 
 	/**
@@ -107,33 +127,28 @@ public class ManagementController implements Initializable {
 
 		// Check if the customer's id is in the reservation list
 		if (library.hasReservation(id)) {
-			promptAlert("Error! The customer has reservation records, can't be deleted !");
+			WindowManager.getInstance().promptAlert("Error! The customer has reservation records, can't be deleted !");
 		} else {
 			result = DatabaseManager.customerCRUD.deleteCustomer(id);
 		}
 		if (result) {
-			customersTable.getItems().remove(customersTable.getSelectionModel().getSelectedItem());
+			library.remove(customersTable.getSelectionModel().getSelectedItem());
+			loadCustomersTable();
 		}
-		System.out.println("Delete customer " + (result ? "with success !" : "failed !"));
+		WindowManager.getInstance().promptAlert("Delete customer " + (result ? "with success !" : "failed !"));
 	}
 
-	/**
-	 * Promt alert message when there's a invalid CURD operation
-	 * 
-	 * @param msg
-	 */
-	public void promptAlert(String msg) {
-		Parent root;
-
+	public void openBookEditWindow() throws SQLException {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Alert.fxml"));
-			root = loader.load();
-			((AlertController) loader.getController()).setMessage(msg);
-			Stage stage = new Stage();
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Alert");
-			stage.setScene(new Scene(root));
-			stage.showAndWait();
+
+			WindowManager manager = WindowManager.getInstance();
+			boolean result = manager.openBookEditWindow(library.findNextBookId());
+
+			if (result) {
+				this.retriveBooks();
+				this.loadBooksTable();
+			}
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Error ! Open failed !!");
@@ -141,32 +156,16 @@ public class ManagementController implements Initializable {
 		}
 	}
 
-	public void openBookEditWindow() {
+	public void openCustomerEditWindow() throws SQLException {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/BookEdit.fxml"));
-			Parent root = loader.load();
-			Stage stage = new Stage();
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add a book");
-			stage.setScene(new Scene(root));
-			stage.showAndWait();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Error ! Open failed !!");
-			e.printStackTrace();
-		}
-	}
+			WindowManager manager = WindowManager.getInstance();
+			boolean result = manager.openCustomerEditWindow(library.findNextCustomerId());
 
-	public void openCustomerEditWindow() {
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/CustomerEdit.fxml"));
-			Parent root = loader.load();
-			((CustomerEditController) loader.getController()).setManagementController(this);
-			Stage stage = new Stage();
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add a customer");
-			stage.setScene(new Scene(root));
-			stage.showAndWait();
+			if (result) {
+				this.retriveCustomers();
+				this.loadCustomersTable();
+			}
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Error ! Open failed !!");

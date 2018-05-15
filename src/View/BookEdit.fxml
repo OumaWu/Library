@@ -8,12 +8,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="420.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.BookEditController">
+<BorderPane fx:id="layout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="420.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.BookEditController">
    <bottom>
       <HBox alignment="CENTER_RIGHT" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" prefWidth="80.0" text="Cancel" />
-            <Button mnemonicParsing="false" prefWidth="80.0" text="OK" />
+            <Button fx:id="btCancel" mnemonicParsing="false" onAction="#close" prefWidth="80.0" text="Cancel" />
+            <Button fx:id="btOk" mnemonicParsing="false" onAction="#insertBook" prefWidth="80.0" text="OK" />
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -34,18 +34,18 @@
          <children>
             <Label text="Title :" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
             <Label text="Author :" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-            <TextField promptText="Enter the title for the book" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-            <TextField promptText="Enter the author for the book" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+            <TextField fx:id="tfTItle" promptText="Enter the title for the book" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+            <TextField fx:id="tfAuthor" promptText="Enter the author for the book" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
             <Label text="Category :" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
             <HBox spacing="10.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <children>
-                  <RadioButton mnemonicParsing="false" selected="true" text="Novel">
+                  <RadioButton fx:id="rbNovel" mnemonicParsing="false" selected="true" text="Novel">
                      <toggleGroup>
                         <ToggleGroup fx:id="bookType" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="Manuel" toggleGroup="$bookType" />
-                  <RadioButton mnemonicParsing="false" text="Magazine" toggleGroup="$bookType" />
+                  <RadioButton fx:id="rbManuel" mnemonicParsing="false" text="Manuel" toggleGroup="$bookType" />
+                  <RadioButton fx:id="rbMagazine" mnemonicParsing="false" text="Magazine" toggleGroup="$bookType" />
                </children>
             </HBox>
          </children>
