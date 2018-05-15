@@ -9,12 +9,12 @@ public class Library implements Cloneable, Iterable<Book> {
 
 	private List<Book> books;
 	private static List<Customer> customers;
-	private List<Reservation> reservation;
+	private List<Reservation> reservations;
 
 	public Library() {
 		this.books = new ArrayList<Book>();
 		this.setCustomers(new ArrayList<Customer>());
-		this.setReservation(new ArrayList<Reservation>());
+		this.setReservations(new ArrayList<Reservation>());
 	}
 
 	public Library(List<Book> books) {
@@ -29,12 +29,12 @@ public class Library implements Cloneable, Iterable<Book> {
 		this.customers = customers;
 	}
 
-	public List<Reservation> getReservation() {
-		return reservation;
+	public List<Reservation> getReservations() {
+		return reservations;
 	}
 
-	public void setReservation(List<Reservation> reservation) {
-		this.reservation = reservation;
+	public void setReservations(List<Reservation> reservations) {
+		this.reservations = reservations;
 	}
 
 	public List<Book> getBooks() {
@@ -80,6 +80,15 @@ public class Library implements Cloneable, Iterable<Book> {
 	 */
 	public boolean removeAll(List<Book> books) {
 		return this.books.removeAll(books);
+	}
+
+	public boolean hasReservation(String id) {
+		boolean result = false;
+		for (Reservation re : this.reservations) {
+			if (id.equals(re.getCustomerId()))
+				result = true;
+		}
+		return result;
 	}
 
 	/**

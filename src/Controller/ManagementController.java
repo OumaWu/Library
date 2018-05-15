@@ -36,6 +36,9 @@ public class ManagementController implements Initializable {
 		DatabaseManager.configCRUDInstance(DBTool.MYSQL, "localhost", "library", "root", "111");
 
 		try {
+			retriveCustomers();
+			retriveBooks();
+			retriveReservations();
 			initialiseCustomersTable();
 			initialiseBooksTable();
 			initialiseCustomersTable();
@@ -99,12 +102,42 @@ public class ManagementController implements Initializable {
 	 */
 	public void deleteCustomer() throws SQLException {
 
+		boolean result = false;
 		String id = customersTable.getSelectionModel().getSelectedItem().getId();
-		boolean result = DatabaseManager.customerCRUD.deleteCustomer(id);
 
+		// Check if the customer's id is in the reservation list
+		if (library.hasReservation(id)) {
+			promptAlert("Error! The customer has reservation records, can't be deleted !");
+		} else {
+			result = DatabaseManager.customerCRUD.deleteCustomer(id);
+		}
 		if (result) {
-			System.out.println("Delete customer with success !!");
 			customersTable.getItems().remove(customersTable.getSelectionModel().getSelectedItem());
+		}
+		System.out.println("Delete customer " + (result ? "with success !" : "failed !"));
+	}
+
+	/**
+	 * Promt alert message when there's a invalid CURD operation
+	 * 
+	 * @param msg
+	 */
+	public void promptAlert(String msg) {
+		Parent root;
+
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Alert.fxml"));
+			root = loader.load();
+			((AlertController) loader.getController()).setMessage(msg);
+			Stage stage = new Stage();
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setTitle("Alert");
+			stage.setScene(new Scene(root));
+			stage.showAndWait();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Error ! Open failed !!");
+			e.printStackTrace();
 		}
 	}
 
@@ -153,7 +186,7 @@ public class ManagementController implements Initializable {
 	 */
 	public void loadReservationsTable() throws SQLException {
 		reservationTable.getItems().clear();
-		reservationTable.getItems().addAll(library.getReservation());
+		reservationTable.getItems().addAll(library.getReservations());
 	}
 
 	/**
@@ -162,8 +195,6 @@ public class ManagementController implements Initializable {
 	 * @throws SQLException
 	 */
 	public void initialiseCustomersTable() throws SQLException {
-		if (library.getCustomers().isEmpty())
-			retriveCustomers();
 		cidColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 		fnColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
 		lnColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
@@ -176,8 +207,7 @@ public class ManagementController implements Initializable {
 	 * @throws SQLException
 	 */
 	public void initialiseBooksTable() throws SQLException {
-		if (library.getBooks().isEmpty())
-			retriveBooks();
+
 		bidColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 		titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
 		authorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
@@ -192,8 +222,7 @@ public class ManagementController implements Initializable {
 	 * @throws SQLException
 	 */
 	public void initialiseReservationTable() throws SQLException {
-		if (library.getReservation().isEmpty())
-			retriveReservations();
+
 		ridColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 		rbidColumn.setCellValueFactory(new PropertyValueFactory<>("bookId"));
 		rcidnColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
@@ -212,6 +241,6 @@ public class ManagementController implements Initializable {
 	}
 
 	public void retriveReservations() throws SQLException {
-		library.setReservation(DatabaseManager.reservationCRUD.retrieveReservations());
+		library.setReservations(DatabaseManager.reservationCRUD.retrieveReservations());
 	}
 }

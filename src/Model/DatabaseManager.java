@@ -13,6 +13,7 @@ import Persistence.ReservationCRUD;
 public class DatabaseManager {
 
 	private final static DatabaseManager instance = new DatabaseManager();
+
 	// Database configuration parameters
 	// private static int dbType;
 	// private static String server, db, usr, pwd;
