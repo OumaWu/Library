@@ -62,6 +62,9 @@ public class ManagementController implements Initializable {
 	@FXML
 	private Button btAdd, btDelete, btSearch;
 
+	/**
+	 * Add button event handling
+	 */
 	public void openWindow() {
 		if (customersTab.isSelected())
 			openCustomerEditWindow();
@@ -71,6 +74,38 @@ public class ManagementController implements Initializable {
 
 		else if (reservationTab.isSelected())
 			;
+	}
+
+	/**
+	 * Delete button event handling
+	 * 
+	 * @throws SQLException
+	 */
+	public void deleteOption() throws SQLException {
+		if (customersTab.isSelected())
+			deleteCustomer();
+
+		else if (booksTab.isSelected())
+			;
+
+		else if (reservationTab.isSelected())
+			;
+	}
+
+	/**
+	 * Delete a row selected from the customer table
+	 * 
+	 * @throws SQLException
+	 */
+	public void deleteCustomer() throws SQLException {
+
+		String id = customersTable.getSelectionModel().getSelectedItem().getId();
+		boolean result = DatabaseManager.customerCRUD.deleteCustomer(id);
+
+		if (result) {
+			System.out.println("Delete customer with success !!");
+			customersTable.getItems().remove(customersTable.getSelectionModel().getSelectedItem());
+		}
 	}
 
 	public void openCustomerEditWindow() {
@@ -97,7 +132,6 @@ public class ManagementController implements Initializable {
 	 * @throws SQLException
 	 */
 	public void loadCustomersTable() throws SQLException {
-		library.setCustomers(DatabaseManager.customerCRUD.retrieveCustomers());
 		customersTable.getItems().clear();
 		customersTable.getItems().addAll(library.getCustomers());
 	}
@@ -108,7 +142,6 @@ public class ManagementController implements Initializable {
 	 * @throws SQLException
 	 */
 	public void loadBooksTable() throws SQLException {
-		library.setBooks(DatabaseManager.bookCRUD.retrieveBooks());
 		booksTable.getItems().clear();
 		booksTable.getItems().addAll(library.getBooks());
 	}
@@ -119,7 +152,6 @@ public class ManagementController implements Initializable {
 	 * @throws SQLException
 	 */
 	public void loadReservationsTable() throws SQLException {
-		library.setReservation(DatabaseManager.reservationCRUD.retrieveReservations());
 		reservationTable.getItems().clear();
 		reservationTable.getItems().addAll(library.getReservation());
 	}
@@ -130,7 +162,8 @@ public class ManagementController implements Initializable {
 	 * @throws SQLException
 	 */
 	public void initialiseCustomersTable() throws SQLException {
-
+		if (library.getCustomers().isEmpty())
+			retriveCustomers();
 		cidColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 		fnColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
 		lnColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
@@ -143,7 +176,8 @@ public class ManagementController implements Initializable {
 	 * @throws SQLException
 	 */
 	public void initialiseBooksTable() throws SQLException {
-
+		if (library.getBooks().isEmpty())
+			retriveBooks();
 		bidColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 		titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
 		authorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
@@ -158,7 +192,8 @@ public class ManagementController implements Initializable {
 	 * @throws SQLException
 	 */
 	public void initialiseReservationTable() throws SQLException {
-
+		if (library.getReservation().isEmpty())
+			retriveReservations();
 		ridColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 		rbidColumn.setCellValueFactory(new PropertyValueFactory<>("bookId"));
 		rcidnColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
@@ -168,4 +203,15 @@ public class ManagementController implements Initializable {
 		loadReservationsTable();
 	}
 
+	public void retriveCustomers() throws SQLException {
+		library.setCustomers(DatabaseManager.customerCRUD.retrieveCustomers());
+	}
+
+	public void retriveBooks() throws SQLException {
+		library.setBooks(DatabaseManager.bookCRUD.retrieveBooks());
+	}
+
+	public void retriveReservations() throws SQLException {
+		library.setReservation(DatabaseManager.reservationCRUD.retrieveReservations());
+	}
 }

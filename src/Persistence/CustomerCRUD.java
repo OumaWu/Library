@@ -16,6 +16,15 @@ public class CustomerCRUD extends CRUDoperations {
 		customers = new ArrayList<Customer>();
 	}
 
+	public boolean deleteCustomer(String id) throws SQLException {
+		boolean result = false;
+
+		DBTool.getConnection(dbType, server, db, usr, pwd);
+		result = DBTool.delete("customers", "WHERE id = " + id);
+		DBTool.closeConnection();
+		return result;
+	}
+
 	public boolean insertCustomer(Customer customer) throws SQLException {
 		boolean result = false;
 		HashMap<String, String> values = new HashMap<String, String>();
