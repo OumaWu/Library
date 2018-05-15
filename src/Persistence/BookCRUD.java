@@ -18,7 +18,29 @@ public class BookCRUD extends CRUDoperations {
 		books = new ArrayList<Book>();
 	}
 
-	// Retrive books' list from database
+	// public boolean deleteCustomer(String id) throws SQLException {
+	// boolean result = false;
+	//
+	// DBTool.getConnection(dbType, server, db, usr, pwd);
+	// result = DBTool.delete("customers", "WHERE id = " + id);
+	// DBTool.closeConnection();
+	// return result;
+	// }
+
+	// public boolean insertBook(Book book) throws SQLException {
+	// boolean result = false;
+	// HashMap<String, String> values = new HashMap<String, String>();
+	// values.put("id", customer.getId());
+	// values.put("firstname", customer.getFirstName());
+	// values.put("lastname", customer.getLastName());
+	//
+	// DBTool.getConnection(dbType, server, db, usr, pwd);
+	// result = DBTool.insert("customers", values);
+	// DBTool.closeConnection();
+	// return result;
+	// }
+
+	// Retrive book list from database
 	public List<Book> retrieveBooks() throws SQLException {
 
 		DBTool.getConnection(dbType, server, db, usr, pwd);

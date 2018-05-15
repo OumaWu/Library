@@ -73,7 +73,7 @@ public class ManagementController implements Initializable {
 			openCustomerEditWindow();
 
 		else if (booksTab.isSelected())
-			;
+			openBookEditWindow();
 
 		else if (reservationTab.isSelected())
 			;
@@ -141,16 +141,31 @@ public class ManagementController implements Initializable {
 		}
 	}
 
-	public void openCustomerEditWindow() {
-		Parent root;
-
+	public void openBookEditWindow() {
 		try {
-			root = FXMLLoader.load(getClass().getResource("/View/CustomerEdit.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/BookEdit.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setTitle("Add a book");
+			stage.setScene(new Scene(root));
+			stage.showAndWait();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Error ! Open failed !!");
+			e.printStackTrace();
+		}
+	}
+
+	public void openCustomerEditWindow() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/CustomerEdit.fxml"));
+			Parent root = loader.load();
+			((CustomerEditController) loader.getController()).setManagementController(this);
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.setTitle("Add a customer");
 			stage.setScene(new Scene(root));
-			CustomerEditController.setManagementController(this);
 			stage.showAndWait();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

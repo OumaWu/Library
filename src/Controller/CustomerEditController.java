@@ -28,7 +28,7 @@ public class CustomerEditController implements Initializable {
 	@FXML
 	private TextField tfFirstName, tfLastName;
 
-	public static void setManagementController(ManagementController management) {
+	public void setManagementController(ManagementController management) {
 		CustomerEditController.management = management;
 	}
 
