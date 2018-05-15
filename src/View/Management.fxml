@@ -13,7 +13,7 @@
             <ComboBox prefWidth="150.0" />
             <Button mnemonicParsing="false" text="Display" />
             <Region HBox.hgrow="ALWAYS" />
-            <Button fx:id="btDelete" mnemonicParsing="false" prefWidth="70.0" text="Delete" />
+            <Button fx:id="btDelete" mnemonicParsing="false" onAction="#deleteOption" prefWidth="70.0" text="Delete" />
             <Button fx:id="btAdd" mnemonicParsing="false" onAction="#openWindow" prefWidth="70.0" text="Add" />
          </children>
          <padding>

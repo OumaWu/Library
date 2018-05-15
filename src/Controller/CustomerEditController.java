@@ -32,7 +32,6 @@ public class CustomerEditController implements Initializable {
 		CustomerEditController.management = management;
 	}
 
-	@FXML
 	public void insertCustomer() throws SQLException {
 		nextId = Library.findNextCustomerId();
 		Customer customer = new Customer(nextId, tfFirstName.getText(), tfLastName.getText());
@@ -42,16 +41,15 @@ public class CustomerEditController implements Initializable {
 		this.close();
 		// refresh the customers table after insertion
 		if (result) {
+			management.retriveCustomers();
 			management.loadCustomersTable();
 		}
 	}
 
-	@FXML
 	public void close() {
 		((Stage) this.layout.getScene().getWindow()).close();
 	}
 
-	@Override
 	public void initialize(URL Location, ResourceBundle resources) {
 		setCustomerCRUD(DatabaseManager.customerCRUD);
 	}
