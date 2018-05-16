@@ -54,7 +54,7 @@
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="15.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
                   <ComboBox promptText="Type" />
-                  <Button mnemonicParsing="false" prefWidth="80.0" text="Select..." />
+                  <Button fx:id="btSelectBook" mnemonicParsing="false" onAction="#openSelectBookWindow" prefWidth="80.0" text="Select..." />
                </children>
             </HBox>
             <DatePicker promptText="Select the borrowing date" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER" />

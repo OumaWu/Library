@@ -73,7 +73,7 @@ public class ManagementController implements Initializable {
 			openBookEditWindow();
 
 		else if (reservationTab.isSelected())
-			;
+			openReservationEditWindow();
 	}
 
 	/**
@@ -152,6 +152,22 @@ public class ManagementController implements Initializable {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Error ! Open failed !!");
+			e.printStackTrace();
+		}
+	}
+
+	public void openReservationEditWindow() throws SQLException {
+		WindowManager manager = WindowManager.getInstance();
+		try {
+			boolean result = manager.openReservationEditWindow(library);
+
+			if (result) {
+				this.retriveReservations();
+				this.loadReservationsTable();
+			}
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -1,9 +1,12 @@
 package Controller;
 
+import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import Model.Customer;
+import Model.Library;
 import Persistence.ReservationCRUD;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,6 +22,7 @@ public class ReservationEditController implements Initializable {
 
 	// Database operation classes
 	private static ReservationCRUD reservationCRUD;
+	private static Library library;
 	private static String nextId;
 	private boolean result = false;
 
@@ -26,15 +30,12 @@ public class ReservationEditController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 		// setCustomerCRUD(DatabaseManager.bookCRUD);
-		rbNovel.setUserData(rbNovel.getText());
-		rbManuel.setUserData(rbManuel.getText());
-		rbMagazine.setUserData(rbMagazine.getText());
 	}
 
 	@FXML
 	private BorderPane layout;
 	@FXML
-	private Button btOk, btCancel;
+	private Button btOk, btCancel, btSelectBook;
 	@FXML
 	private TextField tfTItle, tfAuthor;
 
@@ -45,40 +46,15 @@ public class ReservationEditController implements Initializable {
 	@FXML
 	private RadioButton rbNovel, rbManuel, rbMagazine;
 
-	// public void insertBook() throws SQLException {
-	// // ((RadioButton) bookType.getSelectedToggle()).getText()
-	//
-	// boolean result = false;
-	// String title = tfTItle.getText();
-	// String author = tfAuthor.getText();
-	// // RadioButton selected = (RadioButton) bookType.getSelectedToggle();
-	// String bookType = selected.getText().toUpperCase();
-	//
-	// if (title.isEmpty() || author.isEmpty()) {
-	// WindowManager.getInstance().promptAlert("Please fill all the fields in
-	// the form !");
-	// } else {
-	// Book book = null;
-	// switch (bookType) {
-	// case "NOVEL":
-	// book = new Novel(nextId, title, author);
-	// break;
-	// case "MANUEL":
-	// book = new Manuel(nextId, title, author);
-	// break;
-	// case "MAGAZINE":
-	// book = new Magazine(nextId, title, author);
-	// break;
-	// }
-	//
-	// result = bookCRUD.insertBook(book);
-	// WindowManager.getInstance().promptAlert("Create book " + (result ? "with
-	// success !" : "failed"));
-	// if (result)
-	// this.close();
-	// }
-	// setResult(result);
-	// }
+	public void openSelectBookWindow() {
+		try {
+			WindowManager.getInstance().openBookSelectWindow(library.getBooksByType("Novel"));
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IOException
+				| SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public void close() {
 		((Stage) this.layout.getScene().getWindow()).close();
@@ -105,5 +81,9 @@ public class ReservationEditController implements Initializable {
 	 */
 	public void setResult(boolean result) {
 		this.result = result;
+	}
+
+	public void setLibrary(Library library) {
+		ReservationEditController.library = library;
 	}
 }

@@ -108,6 +108,25 @@ public class Library implements Cloneable, Iterable<Book> {
 		return result;
 	}
 
+	public List<String> getBookTypes() {
+		List<String> bookTypes = new ArrayList<String>();
+		for (Book book : this.books) {
+			// Avoid the duplicated category
+			if (!bookTypes.contains(book.getCategory()))
+				bookTypes.add(book.getCategory());
+		}
+		return bookTypes;
+	}
+
+	public List<Book> getBooksByType(String type) {
+		List<Book> books = new ArrayList<Book>();
+		for (Book book : this.books) {
+			if (book.getCategory().equalsIgnoreCase(type))
+				books.add(book);
+		}
+		return books;
+	}
+
 	/**
 	 * find the next id of books
 	 * 

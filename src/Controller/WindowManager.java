@@ -2,8 +2,10 @@ package Controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import Model.Book;
+import Model.Library;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -92,20 +94,35 @@ public class WindowManager {
 		return controller.getResult();
 	}
 
-	public Book openBookSelectWindow(String bookType)
+	public boolean openReservationEditWindow(Library library) throws IOException {
+
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Reservation.fxml"));
+		Parent root = loader.load();
+		ReservationEditController controller = loader.<ReservationEditController> getController();
+		controller.setLibrary(library);
+		Stage stage = new Stage();
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.setTitle("Create a book reservation");
+		stage.setScene(new Scene(root));
+		stage.showAndWait();
+
+		return controller.getResult();
+	}
+
+	public String openBookSelectWindow(List<Book> books)
 			throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
-		Book book = null;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/SelectBook.fxml"));
 		Parent root = loader.load();
 		SelectBookController controller = loader.<SelectBookController> getController();
-		controller.loadBooksByType(bookType);
+		controller.setBooks(books);
+		controller.setBookListAndIds();
+		controller.setBinding();
 		Stage stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.setTitle("Select a book");
 		stage.setScene(new Scene(root));
 		stage.showAndWait();
 
-		book = controller.getSelectedBook();
-		return book;
+		return controller.getSelectedBookId();
 	}
 }
