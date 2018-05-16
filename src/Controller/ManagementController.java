@@ -12,17 +12,12 @@ import Model.Library;
 import Model.Reservation;
 import Persistence.DBTool;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 public class ManagementController implements Initializable {
 
@@ -36,6 +31,9 @@ public class ManagementController implements Initializable {
 		DatabaseManager.configCRUDInstance(DBTool.MYSQL, "localhost", "library", "root", "111");
 
 		try {
+			retriveCustomers();
+			retriveBooks();
+			retriveReservations();
 			initialiseCustomersTable();
 			initialiseBooksTable();
 			initialiseCustomersTable();
@@ -64,16 +62,18 @@ public class ManagementController implements Initializable {
 
 	/**
 	 * Add button event handling
+	 * 
+	 * @throws SQLException
 	 */
-	public void openWindow() {
+	public void openWindow() throws SQLException {
 		if (customersTab.isSelected())
 			openCustomerEditWindow();
 
 		else if (booksTab.isSelected())
-			;
+			openBookEditWindow();
 
 		else if (reservationTab.isSelected())
-			;
+			openReservationEditWindow();
 	}
 
 	/**
@@ -86,10 +86,33 @@ public class ManagementController implements Initializable {
 			deleteCustomer();
 
 		else if (booksTab.isSelected())
-			;
+			deleteBook();
 
 		else if (reservationTab.isSelected())
 			;
+	}
+
+	/**
+	 * Delete a row selected from the book table
+	 * 
+	 * @throws SQLException
+	 */
+	public void deleteBook() throws SQLException {
+
+		boolean result = false;
+		String id = booksTable.getSelectionModel().getSelectedItem().getId();
+
+		// Check if the customer's id is in the reservation list
+		if (library.isReserved(id)) {
+			WindowManager.getInstance().promptAlert("Error! The Book has reservation records, can't be deleted !");
+		} else {
+			result = DatabaseManager.bookCRUD.deleteBook(id);
+		}
+		if (result) {
+			library.remove(booksTable.getSelectionModel().getSelectedItem());
+			loadBooksTable();
+		}
+		WindowManager.getInstance().promptAlert("Delete book " + (result ? "with success !" : "failed !"));
 	}
 
 	/**
@@ -99,26 +122,66 @@ public class ManagementController implements Initializable {
 	 */
 	public void deleteCustomer() throws SQLException {
 
+		boolean result = false;
 		String id = customersTable.getSelectionModel().getSelectedItem().getId();
-		boolean result = DatabaseManager.customerCRUD.deleteCustomer(id);
 
+		// Check if the customer's id is in the reservation list
+		if (library.hasReservation(id)) {
+			WindowManager.getInstance().promptAlert("Error! The customer has reservation records, can't be deleted !");
+		} else {
+			result = DatabaseManager.customerCRUD.deleteCustomer(id);
+		}
 		if (result) {
-			System.out.println("Delete customer with success !!");
-			customersTable.getItems().remove(customersTable.getSelectionModel().getSelectedItem());
+			library.remove(customersTable.getSelectionModel().getSelectedItem());
+			loadCustomersTable();
+		}
+		WindowManager.getInstance().promptAlert("Delete customer " + (result ? "with success !" : "failed !"));
+	}
+
+	public void openBookEditWindow() throws SQLException {
+		try {
+
+			WindowManager manager = WindowManager.getInstance();
+			boolean result = manager.openBookEditWindow(library.findNextBookId());
+
+			if (result) {
+				this.retriveBooks();
+				this.loadBooksTable();
+			}
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Error ! Open failed !!");
+			e.printStackTrace();
 		}
 	}
 
-	public void openCustomerEditWindow() {
-		Parent root;
-
+	public void openReservationEditWindow() throws SQLException {
+		WindowManager manager = WindowManager.getInstance();
 		try {
-			root = FXMLLoader.load(getClass().getResource("/View/CustomerEdit.fxml"));
-			Stage stage = new Stage();
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add a customer");
-			stage.setScene(new Scene(root));
-			CustomerEditController.setManagementController(this);
-			stage.showAndWait();
+			boolean result = manager.openReservationEditWindow(library);
+
+			if (result) {
+				this.retriveReservations();
+				this.loadReservationsTable();
+			}
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void openCustomerEditWindow() throws SQLException {
+		try {
+			WindowManager manager = WindowManager.getInstance();
+			boolean result = manager.openCustomerEditWindow(library.findNextCustomerId());
+
+			if (result) {
+				this.retriveCustomers();
+				this.loadCustomersTable();
+			}
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Error ! Open failed !!");
@@ -153,7 +216,7 @@ public class ManagementController implements Initializable {
 	 */
 	public void loadReservationsTable() throws SQLException {
 		reservationTable.getItems().clear();
-		reservationTable.getItems().addAll(library.getReservation());
+		reservationTable.getItems().addAll(library.getReservations());
 	}
 
 	/**
@@ -162,8 +225,6 @@ public class ManagementController implements Initializable {
 	 * @throws SQLException
 	 */
 	public void initialiseCustomersTable() throws SQLException {
-		if (library.getCustomers().isEmpty())
-			retriveCustomers();
 		cidColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 		fnColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
 		lnColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
@@ -176,8 +237,7 @@ public class ManagementController implements Initializable {
 	 * @throws SQLException
 	 */
 	public void initialiseBooksTable() throws SQLException {
-		if (library.getBooks().isEmpty())
-			retriveBooks();
+
 		bidColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 		titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
 		authorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
@@ -192,8 +252,7 @@ public class ManagementController implements Initializable {
 	 * @throws SQLException
 	 */
 	public void initialiseReservationTable() throws SQLException {
-		if (library.getReservation().isEmpty())
-			retriveReservations();
+
 		ridColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 		rbidColumn.setCellValueFactory(new PropertyValueFactory<>("bookId"));
 		rcidnColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
@@ -208,10 +267,15 @@ public class ManagementController implements Initializable {
 	}
 
 	public void retriveBooks() throws SQLException {
-		library.setBooks(DatabaseManager.bookCRUD.retrieveBooks());
+		try {
+			library.setBooks(DatabaseManager.bookCRUD.retrieveBooks());
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void retriveReservations() throws SQLException {
-		library.setReservation(DatabaseManager.reservationCRUD.retrieveReservations());
+		library.setReservations(DatabaseManager.reservationCRUD.retrieveReservations());
 	}
 }

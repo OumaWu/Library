@@ -1,6 +1,6 @@
 package Model;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Reservation {
 	private String id;
@@ -114,6 +114,10 @@ public class Reservation {
 
 	public void setReturned(boolean returned) {
 		this.returned = returned;
+	}
+
+	public int getIntId() {
+		return Integer.parseInt(this.id);
 	}
 
 }

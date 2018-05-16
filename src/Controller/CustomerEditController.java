@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 
 import Model.Customer;
 import Model.DatabaseManager;
-import Model.Library;
 import Persistence.CustomerCRUD;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,9 +17,9 @@ import javafx.stage.Stage;
 public class CustomerEditController implements Initializable {
 
 	// Database operation classes
-	private static ManagementController management;
 	private static CustomerCRUD customerCRUD;
 	private static String nextId;
+	private boolean result = false;
 	@FXML
 	private BorderPane layout;
 	@FXML
@@ -28,22 +27,20 @@ public class CustomerEditController implements Initializable {
 	@FXML
 	private TextField tfFirstName, tfLastName;
 
-	public static void setManagementController(ManagementController management) {
-		CustomerEditController.management = management;
-	}
-
 	public void insertCustomer() throws SQLException {
-		nextId = Library.findNextCustomerId();
-		Customer customer = new Customer(nextId, tfFirstName.getText(), tfLastName.getText());
-		boolean result = customerCRUD.insertCustomer(customer);
-
-		System.out.println("Create customer " + (result ? "with success !" : "failed"));
-		this.close();
-		// refresh the customers table after insertion
-		if (result) {
-			management.retriveCustomers();
-			management.loadCustomersTable();
+		boolean result = false;
+		String firstName = tfFirstName.getText();
+		String lastName = tfLastName.getText();
+		if (firstName.isEmpty() || lastName.isEmpty()) {
+			WindowManager.getInstance().promptAlert("Please fill all the fields in the form !");
+		} else {
+			Customer customer = new Customer(nextId, firstName, lastName);
+			result = customerCRUD.insertCustomer(customer);
+			WindowManager.getInstance().promptAlert("Create customer " + (result ? "with success !" : "failed"));
+			if (result)
+				this.close();
 		}
+		setResult(result);
 	}
 
 	public void close() {
@@ -54,8 +51,27 @@ public class CustomerEditController implements Initializable {
 		setCustomerCRUD(DatabaseManager.customerCRUD);
 	}
 
-	public static void setCustomerCRUD(CustomerCRUD customerCRUD) {
+	public void setCustomerCRUD(CustomerCRUD customerCRUD) {
 		CustomerEditController.customerCRUD = customerCRUD;
+	}
+
+	public void setNextId(String nextId) {
+		CustomerEditController.nextId = nextId;
+	}
+
+	/**
+	 * @return the result
+	 */
+	public boolean getResult() {
+		return result;
+	}
+
+	/**
+	 * @param result
+	 *            the result to set
+	 */
+	public void setResult(boolean result) {
+		this.result = result;
 	}
 
 }

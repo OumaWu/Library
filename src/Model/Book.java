@@ -8,12 +8,23 @@ public abstract class Book implements Comparable<Book>, Cloneable {
 	private String category;
 	private boolean availability;
 
+	public Book() {
+	}
+
 	public Book(String id, String title, String author, boolean availability) {
 		this.author = author;
 		this.id = id;
 		this.title = title;
 		this.category = this.getClass().getSimpleName();
 		this.availability = availability;
+	}
+
+	public Book(String id, String title, String author) {
+		this.author = author;
+		this.id = id;
+		this.title = title;
+		this.category = this.getClass().getSimpleName();
+		this.availability = true;
 	}
 
 	/**
@@ -69,7 +80,7 @@ public abstract class Book implements Comparable<Book>, Cloneable {
 		this.category = category;
 	}
 
-	public boolean isAvailability() {
+	public boolean getAvailability() {
 		return availability;
 	}
 
@@ -131,7 +142,11 @@ public abstract class Book implements Comparable<Book>, Cloneable {
 
 	@Override
 	public int compareTo(Book o) {
-		return getId().compareTo(o.getId());
+		return new Integer(getIntId()).compareTo(o.getIntId());
+	}
+
+	public int getIntId() {
+		return Integer.parseInt(this.id);
 	}
 
 }

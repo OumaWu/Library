@@ -8,13 +8,13 @@ import java.util.List;
 public class Library implements Cloneable, Iterable<Book> {
 
 	private List<Book> books;
-	private static List<Customer> customers;
-	private List<Reservation> reservation;
+	private List<Customer> customers;
+	private List<Reservation> reservations;
 
 	public Library() {
 		this.books = new ArrayList<Book>();
 		this.setCustomers(new ArrayList<Customer>());
-		this.setReservation(new ArrayList<Reservation>());
+		this.setReservations(new ArrayList<Reservation>());
 	}
 
 	public Library(List<Book> books) {
@@ -29,12 +29,12 @@ public class Library implements Cloneable, Iterable<Book> {
 		this.customers = customers;
 	}
 
-	public List<Reservation> getReservation() {
-		return reservation;
+	public List<Reservation> getReservations() {
+		return reservations;
 	}
 
-	public void setReservation(List<Reservation> reservation) {
-		this.reservation = reservation;
+	public void setReservations(List<Reservation> reservations) {
+		this.reservations = reservations;
 	}
 
 	public List<Book> getBooks() {
@@ -75,6 +75,14 @@ public class Library implements Cloneable, Iterable<Book> {
 		return this.books.remove(book);
 	}
 
+	public boolean remove(Customer customer) {
+		return this.customers.remove(customer);
+	}
+
+	public boolean remove(Reservation reservation) {
+		return this.reservations.remove(reservation);
+	}
+
 	/**
 	 * supprimer une liste de documents
 	 */
@@ -82,12 +90,63 @@ public class Library implements Cloneable, Iterable<Book> {
 		return this.books.removeAll(books);
 	}
 
+	public boolean isReserved(String id) {
+		boolean result = false;
+		for (Reservation re : this.reservations) {
+			if (id.equals(re.getBookId()))
+				result = true;
+		}
+		return result;
+	}
+
+	public boolean hasReservation(String id) {
+		boolean result = false;
+		for (Reservation re : this.reservations) {
+			if (id.equals(re.getCustomerId()))
+				result = true;
+		}
+		return result;
+	}
+
+	public List<String> getBookTypes() {
+		List<String> bookTypes = new ArrayList<String>();
+		for (Book book : this.books) {
+			// Avoid the duplicated category
+			if (!bookTypes.contains(book.getCategory()))
+				bookTypes.add(book.getCategory());
+		}
+		return bookTypes;
+	}
+
+	public List<Book> getBooksByType(String type) {
+		List<Book> books = new ArrayList<Book>();
+		for (Book book : this.books) {
+			if (book.getCategory().equalsIgnoreCase(type))
+				books.add(book);
+		}
+		return books;
+	}
+
 	/**
-	 * find the last id of customers
+	 * find the next id of books
 	 * 
-	 * @return lastId
+	 * @return lastId + 1
 	 */
-	public static String findNextCustomerId() {
+	public String findNextBookId() {
+		int lastId = 0;
+		for (Book book : books) {
+			if (lastId < book.getIntId())
+				lastId = book.getIntId();
+		}
+		return convertId(lastId + 1);
+	}
+
+	/**
+	 * find the next id of customers
+	 * 
+	 * @return lastId + 1
+	 */
+	public String findNextCustomerId() {
 		int lastId = 0;
 		for (Customer customer : customers) {
 			if (lastId < customer.getIntId())
