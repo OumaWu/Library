@@ -7,9 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import Model.Book;
-import Model.Magazine;
-import Model.Manuel;
-import Model.Novel;
 
 public class BookCRUD extends CRUDoperations {
 
@@ -44,28 +41,50 @@ public class BookCRUD extends CRUDoperations {
 	}
 
 	// Retrive book list from database
-	public List<Book> retrieveBooks() throws SQLException {
+	public List<Book> retrieveBooks()
+			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 
 		DBTool.getConnection(dbType, server, db, usr, pwd);
 		ResultSet rs = DBTool.selectAll("books");
 		books.clear();
 
 		while (rs.next()) {
-			Book book = null;
-			switch (rs.getString("category").toUpperCase()) {
-			case "NOVEL":
-				book = new Novel(rs.getString("id"), rs.getString("title"), rs.getString("author"),
-						rs.getBoolean("availability"));
-				break;
-			case "MANUEL":
-				book = new Manuel(rs.getString("id"), rs.getString("title"), rs.getString("author"),
-						rs.getBoolean("availability"));
-				break;
-			case "MAGAZINE":
-				book = new Magazine(rs.getString("id"), rs.getString("title"), rs.getString("author"),
-						rs.getBoolean("availability"));
-				break;
-			}
+			String bookType = rs.getString("category").toLowerCase();
+			String className = "Model." + bookType.substring(0, 1).toUpperCase() + bookType.substring(1);
+
+			System.out.println(className);
+
+			// Java Reflection
+			Book book = (Book) Class.forName(className).newInstance();
+			book.setId(rs.getString("id"));
+			book.setTitle(rs.getString("title"));
+			book.setAuthor(rs.getString("author"));
+			book.setCategory(rs.getString("category"));
+			book.setAvailability(rs.getBoolean("availability"));
+
+			if (book != null)
+				books.add(book);
+		}
+		DBTool.closeConnection();
+		return books;
+	}
+
+	public List<Book> retrieveBooksByType(String type)
+			throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+
+		DBTool.getConnection(dbType, server, db, usr, pwd);
+		ResultSet rs = DBTool.select("books", "*", "WHERE type like " + type);
+		books.clear();
+		// Cast the passed type string to class name with package
+		String className = "Model." + type.substring(0, 1).toUpperCase() + type.substring(1).toLowerCase();
+
+		while (rs.next()) {
+			Book book = (Book) Class.forName(className).newInstance();
+			book.setId(rs.getString("id"));
+			book.setTitle(rs.getString("title"));
+			book.setAuthor(rs.getString("author"));
+			book.setCategory(rs.getString("category"));
+			book.setAvailability(rs.getBoolean("availability"));
 			if (book != null)
 				books.add(book);
 		}

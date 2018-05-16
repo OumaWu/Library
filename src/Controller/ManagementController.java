@@ -251,7 +251,12 @@ public class ManagementController implements Initializable {
 	}
 
 	public void retriveBooks() throws SQLException {
-		library.setBooks(DatabaseManager.bookCRUD.retrieveBooks());
+		try {
+			library.setBooks(DatabaseManager.bookCRUD.retrieveBooks());
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void retriveReservations() throws SQLException {

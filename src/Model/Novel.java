@@ -2,6 +2,9 @@ package Model;
 
 public class Novel extends Book {
 
+	public Novel() {
+	}
+
 	public Novel(String id, String title, String author, boolean availability) {
 		super(id, title, author, availability);
 	}

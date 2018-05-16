@@ -8,6 +8,9 @@ public abstract class Book implements Comparable<Book>, Cloneable {
 	private String category;
 	private boolean availability;
 
+	public Book() {
+	}
+
 	public Book(String id, String title, String author, boolean availability) {
 		this.author = author;
 		this.id = id;

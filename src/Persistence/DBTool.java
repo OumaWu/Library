@@ -157,11 +157,48 @@ public class DBTool {
 		return result;
 	}
 
+	/**
+	 * Select some columns from a table
+	 * 
+	 * @param table
+	 * @param column
+	 * @param where
+	 * @return
+	 * @throws SQLException
+	 */
 	public static ResultSet select(String table, String[] columns, String where) throws SQLException {
 
 		ResultSet res = null;
 		String selectStmt = "SELECT ";
 		selectStmt += String.join(", ", columns);
+		selectStmt += " FROM " + table;
+		selectStmt += " " + where;
+
+		System.out.println(selectStmt);
+
+		try {
+			stmt = conn.createStatement();
+			res = stmt.executeQuery(selectStmt);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+
+	/**
+	 * Select a column from a table
+	 * 
+	 * @param table
+	 * @param column
+	 * @param where
+	 * @return
+	 * @throws SQLException
+	 */
+	public static ResultSet select(String table, String column, String where) throws SQLException {
+
+		ResultSet res = null;
+		String selectStmt = "SELECT ";
+		selectStmt += column;
 		selectStmt += " FROM " + table;
 		selectStmt += " " + where;
 

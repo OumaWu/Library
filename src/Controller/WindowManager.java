@@ -1,7 +1,9 @@
 package Controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
+import Model.Book;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -88,5 +90,22 @@ public class WindowManager {
 		stage.showAndWait();
 
 		return controller.getResult();
+	}
+
+	public Book openBookSelectWindow(String bookType)
+			throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
+		Book book = null;
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/SelectBook.fxml"));
+		Parent root = loader.load();
+		SelectBookController controller = loader.<SelectBookController> getController();
+		controller.loadBooksByType(bookType);
+		Stage stage = new Stage();
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.setTitle("Select a book");
+		stage.setScene(new Scene(root));
+		stage.showAndWait();
+
+		book = controller.getSelectedBook();
+		return book;
 	}
 }

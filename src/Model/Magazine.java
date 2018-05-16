@@ -2,6 +2,9 @@ package Model;
 
 public class Magazine extends Book {
 
+	public Magazine() {
+	}
+
 	public Magazine(String id, String title, String author, boolean availability) {
 		super(id, title, author, availability);
 	}
