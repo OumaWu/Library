@@ -104,6 +104,7 @@ public class WindowManager {
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.setTitle("Create a book reservation");
 		stage.setScene(new Scene(root));
+		controller.setComboBoxValues();
 		stage.showAndWait();
 
 		return controller.getResult();

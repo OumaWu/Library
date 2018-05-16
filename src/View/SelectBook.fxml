@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.BorderPane?>
 
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="Controller.SelectBookController">
+<BorderPane fx:id="layout" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="Controller.SelectBookController">
    <center>
-      <ListView fx:id="bookList" BorderPane.alignment="CENTER" />
+      <ListView fx:id="bookList" prefHeight="300.0" prefWidth="400.0" BorderPane.alignment="CENTER" />
    </center>
    <bottom>
       <HBox alignment="CENTER_RIGHT" BorderPane.alignment="CENTER">

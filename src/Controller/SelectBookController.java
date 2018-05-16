@@ -13,6 +13,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 public class SelectBookController implements Initializable {
 
@@ -24,14 +26,16 @@ public class SelectBookController implements Initializable {
 	}
 
 	@FXML
+	private BorderPane layout;
+	@FXML
+	private Button btOk;
+	@FXML
 	private ListView<String> bookList;
 	private List<Book> books;
 	private List<String> bookIds;
 	private ListProperty<String> booksProperty;
 	private ListProperty<String> bookIdsProperty;
 	private String SelectedBookId = "";
-	@FXML
-	private Button btOk;
 
 	// public void test() {
 	// System.out.println(bookIdsProperty.get(bookList.getSelectionModel().getSelectedIndex())
@@ -41,6 +45,7 @@ public class SelectBookController implements Initializable {
 
 	public void setSelectedBookId() {
 		SelectedBookId = bookIdsProperty.get(bookList.getSelectionModel().getSelectedIndex());
+		close();
 	}
 
 	public String getSelectedBookId() {
@@ -68,5 +73,9 @@ public class SelectBookController implements Initializable {
 		bookIdsProperty.set(FXCollections.observableArrayList(bookIds));
 		// Bind the books' ids to the book list
 		booksProperty.bind(bookIdsProperty);
+	}
+
+	public void close() {
+		((Stage) this.layout.getScene().getWindow()).close();
 	}
 }

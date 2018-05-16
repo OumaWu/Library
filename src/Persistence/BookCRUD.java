@@ -52,8 +52,6 @@ public class BookCRUD extends CRUDoperations {
 			String bookType = rs.getString("category").toLowerCase();
 			String className = "Model." + bookType.substring(0, 1).toUpperCase() + bookType.substring(1);
 
-			System.out.println(className);
-
 			// Java Reflection
 			Book book = (Book) Class.forName(className).newInstance();
 			book.setId(rs.getString("id"));

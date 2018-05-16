@@ -5,7 +5,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import Model.Customer;
+import Model.DatabaseManager;
 import Model.Library;
 import Persistence.ReservationCRUD;
 import javafx.fxml.FXML;
@@ -25,11 +25,12 @@ public class ReservationEditController implements Initializable {
 	private static Library library;
 	private static String nextId;
 	private boolean result = false;
+	private String bookId = "";
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
-		// setCustomerCRUD(DatabaseManager.bookCRUD);
+		setReservationCRUD(DatabaseManager.reservationCRUD);
 	}
 
 	@FXML
@@ -38,29 +39,39 @@ public class ReservationEditController implements Initializable {
 	private Button btOk, btCancel, btSelectBook;
 	@FXML
 	private TextField tfTItle, tfAuthor;
-
-	private ComboBox<Customer> cbCustomer;
+	@FXML
+	private ComboBox<String> cbCustomer, cbBookType;
 
 	@FXML
 	private ToggleGroup status;
 	@FXML
 	private RadioButton rbNovel, rbManuel, rbMagazine;
 
+	/**
+	 * Open the book selection window with the type selected in the combobox
+	 */
 	public void openSelectBookWindow() {
 		try {
-			WindowManager.getInstance().openBookSelectWindow(library.getBooksByType("Novel"));
+			String bookType = cbBookType.getSelectionModel().getSelectedItem();
+			bookId = WindowManager.getInstance().openBookSelectWindow(library.getBooksByType(bookType));
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IOException
 				| SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println(bookId);
+	}
+
+	public void setComboBoxValues() {
+		cbBookType.getItems().addAll(library.getBookTypes());
+		cbBookType.setPromptText(cbBookType.getItems().get(0));
 	}
 
 	public void close() {
 		((Stage) this.layout.getScene().getWindow()).close();
 	}
 
-	public void setCustomerCRUD(ReservationCRUD reservationCRUD) {
+	public void setReservationCRUD(ReservationCRUD reservationCRUD) {
 		ReservationEditController.reservationCRUD = reservationCRUD;
 	}
 
