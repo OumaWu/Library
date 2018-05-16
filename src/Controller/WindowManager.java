@@ -17,6 +17,27 @@ public class WindowManager {
 	}
 
 	/**
+	 * Open the management window
+	 */
+	public void openManagementWindow() {
+
+		try {
+			Parent root = FXMLLoader.load(getClass().getResource("/View/Management.fxml"));
+			Stage stage = new Stage();
+			stage.initModality(Modality.APPLICATION_MODAL);
+			// stage.initStyle(StageStyle.UNDECORATED);
+			stage.setTitle("Books Management");
+			stage.setScene(new Scene(root));
+			stage.show();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Error ! Open failed !!");
+			e.printStackTrace();
+		}
+	}
+
+	/**
 	 * Promt alert message when there's a invalid CURD operation
 	 * 
 	 * @param msg

@@ -240,7 +240,7 @@ public class DBTool {
 		}
 		System.out.println("Driver O.K.");
 
-		String url = "";
+		String url = "jdbc:mysql://" + server + "/" + db + "?useSSL=true";
 		String user = usr;
 		String passwd = pwd;
 

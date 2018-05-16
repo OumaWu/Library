@@ -4,9 +4,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 import Model.Customer;
+import Model.Reservation;
 
 public class TestDBTool {
 
@@ -47,6 +50,104 @@ public class TestDBTool {
 
 		// Test delete method :
 		// deleteTest();
+
+		// success
+		// insertReservationTest();
+
+		// success
+		// deleteReservationTest();
+
+		// success
+		// updateReservationTest();
+	}
+
+	public static void updateReservationTest() {
+		ReservationCRUD crud = new ReservationCRUD();
+
+		Date bookD = new Date();
+		Date returnD = new Date();
+		bookD.setTime(Calendar.getInstance().getTimeInMillis());
+		returnD.setTime(Calendar.getInstance().getTimeInMillis() + 186400000);
+
+		Reservation r = new Reservation();
+		Reservation r2 = new Reservation();
+		r.setId("11111");
+		r.setCustomerId("11111");
+		r.setBookId("11111");
+		r.setBookDate(bookD);
+		r.setReturnDate(returnD);
+		r.setReturned(false);
+		r2.setId("11111");
+		r2.setCustomerId("11111");
+		r2.setBookId("11111");
+		r2.setBookDate(bookD);
+		r2.setReturnDate(returnD);
+		r2.setReturned(true);
+
+		try {
+			DBTool.getConnection(DBTool.MYSQL, server, db, usr, pwd);
+			boolean res = crud.updateReservation(r, r2);
+			DBTool.closeConnection();
+
+			if (res)
+				System.out.println("Update Reservation with success !");
+			else
+				System.out.println("Update Reservation failed !");
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public static void deleteReservationTest() {
+		ReservationCRUD crud = new ReservationCRUD();
+		try {
+			DBTool.getConnection(DBTool.MYSQL, server, db, usr, pwd);
+			boolean res = crud.deleteReservation("11111");
+			DBTool.closeConnection();
+
+			if (res)
+				System.out.println("Delete Reservation with success !");
+			else
+				System.out.println("Delete Reservation failed !");
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public static void insertReservationTest() {
+		ReservationCRUD crud = new ReservationCRUD();
+
+		Date bookD = new Date();
+		Date returnD = new Date();
+		bookD.setTime(Calendar.getInstance().getTimeInMillis());
+		returnD.setTime(Calendar.getInstance().getTimeInMillis() + 186400000);
+
+		Reservation r = new Reservation();
+		r.setId("11111");
+		r.setCustomerId("11111");
+		r.setBookId("11111");
+		r.setBookDate(bookD);
+		r.setReturnDate(returnD);
+		r.setReturned(false);
+
+		try {
+			DBTool.getConnection(DBTool.MYSQL, server, db, usr, pwd);
+			boolean res = crud.insertReservation(r);
+			DBTool.closeConnection();
+
+			if (res)
+				System.out.println("Insert Reservation with success !");
+			else
+				System.out.println("Insert Reservation failed !");
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public static void deleteTest() {
@@ -78,6 +179,7 @@ public class TestDBTool {
 		try {
 			DBTool.getConnection(DBTool.MYSQL, server, db, usr, pwd);
 			boolean res = DBTool.update("customers", values, where);
+			DBTool.closeConnection();
 
 			if (res)
 				System.out.println("Update with success !");
@@ -102,6 +204,7 @@ public class TestDBTool {
 		try {
 			DBTool.getConnection(DBTool.MYSQL, server, db, usr, pwd);
 			boolean res = DBTool.update("customers", values, where);
+			DBTool.closeConnection();
 
 			if (res)
 				System.out.println("Update with success !");
@@ -126,6 +229,7 @@ public class TestDBTool {
 		try {
 			DBTool.getConnection(DBTool.MYSQL, server, db, usr, pwd);
 			boolean res = DBTool.insert("customers", values);
+			DBTool.closeConnection();
 
 			if (res)
 				System.out.println("Insert with success !");
