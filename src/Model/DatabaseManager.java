@@ -1,5 +1,6 @@
 package Model;
 
+import Persistence.AdministratorCRUD;
 import Persistence.BookCRUD;
 import Persistence.CustomerCRUD;
 import Persistence.ReservationCRUD;
@@ -22,6 +23,7 @@ public class DatabaseManager {
 	public static final CustomerCRUD customerCRUD = new CustomerCRUD();
 	public static final BookCRUD bookCRUD = new BookCRUD();
 	public static final ReservationCRUD reservationCRUD = new ReservationCRUD();
+	public static final AdministratorCRUD administratorCRUD = new AdministratorCRUD();
 
 	public static DatabaseManager getInstance() {
 		return instance;
@@ -34,6 +36,7 @@ public class DatabaseManager {
 		bookCRUD.configDB(dbType, server, db, usr, pwd);
 		customerCRUD.configDB(dbType, server, db, usr, pwd);
 		reservationCRUD.configDB(dbType, server, db, usr, pwd);
+		administratorCRUD.configDB(dbType, server, db, usr, pwd);
 	}
 
 	// public static CustomerCRUD getCustomerCRUD() {
@@ -46,6 +49,9 @@ public class DatabaseManager {
 	//
 	// public static BookCRUD getBookCRUD() {
 	// return bookCRUD;
+	// }
+	// public static BookCRUD getAdministratorCRUD() {
+	// return administratorCRUD;
 	// }
 
 }

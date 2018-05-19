@@ -36,7 +36,7 @@
                   <Insets />
                </HBox.margin>
             </Label>
-            <TextField fx:id="tfPassword" prefWidth="200.0" promptText="password" />
+            <PasswordField fx:id="tfPassword" prefWidth="200.0" promptText="password" />
          </children>
          <VBox.margin>
             <Insets bottom="10.0" top="10.0" />
