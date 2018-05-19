@@ -11,4 +11,7 @@ Backend solutions :
 Design Patterns :
   - Singleton Pattern
   - Proxy Pattern
-  - Factory Pattern
+  - Factory Pattern (BookFactory)
+  - Façade Pattern (DBTool)
+  - Strategy Pattern (View for Novel - Manuel - Magazine)
+  - MVC

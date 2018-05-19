@@ -3,6 +3,8 @@ package Controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import Model.DatabaseManager;
+import Persistence.DBTool;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -14,6 +16,7 @@ public class LoginController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		DatabaseManager.configCRUDInstance(DBTool.MYSQL, "localhost", "library", "root", "111");
 		System.out.println("Login page is now loaded!");
 	}
 
@@ -26,9 +29,26 @@ public class LoginController implements Initializable {
 
 	@FXML
 	public void loginProcess() {
-		System.out.println(tfLogin.getText());
-		System.out.println(tfPassword.getText());
-		this.openManagementWindow();
+		boolean result;
+		
+		try {
+			String login = tfLogin.getText();
+			String pwd = tfPassword.getText();
+			
+			//Check if the user is registered
+			result = DatabaseManager.administratorCRUD.loginAdministrator(login, pwd);
+			
+			if(result)
+				this.openManagementWindow();
+			else
+				WindowManager.getInstance().promptAlert("Error! Wrong login or password!");
+				
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		
 	}
 
 	@FXML
