@@ -202,8 +202,6 @@ public class DBTool {
 		selectStmt += " FROM " + table;
 		selectStmt += " " + where;
 
-		System.out.println(selectStmt);
-
 		try {
 			stmt = conn.createStatement();
 			res = stmt.executeQuery(selectStmt);
@@ -249,7 +247,8 @@ public class DBTool {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println("\n********************Connection closed successfully !********************\n");
+		// System.out.println("\n********************Connection closed
+		// successfully !********************\n");
 	}
 
 	/**
@@ -275,7 +274,7 @@ public class DBTool {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("Driver O.K.");
+		// System.out.println("Driver O.K.");
 
 		String url = "jdbc:mysql://" + server + "/" + db + "?useSSL=true";
 		String user = usr;
@@ -292,7 +291,8 @@ public class DBTool {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println("\n********************Connexion successful !********************\n");
+		// System.out.println("\n********************Connexion successful
+		// !********************\n");
 
 		return conn;
 	}

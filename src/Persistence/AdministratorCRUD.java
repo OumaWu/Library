@@ -2,12 +2,8 @@ package Persistence;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
-import Model.Administrator;
-import Model.Customer;
+import Controller.WindowManager;
 
 public class AdministratorCRUD extends CRUDoperations {
 
@@ -16,9 +12,10 @@ public class AdministratorCRUD extends CRUDoperations {
 	public AdministratorCRUD() {
 		administrator = null;
 	}
-	
+
 	/**
 	 * Check if login informations are correct
+	 * 
 	 * @param login
 	 * @param pwdSQL
 	 * @return
@@ -27,17 +24,20 @@ public class AdministratorCRUD extends CRUDoperations {
 	public boolean loginAdministrator(String login, String pwdSQL) throws SQLException {
 		boolean resultBool = false;
 		ResultSet result = null;
-		
+
 		DBTool.getConnection(dbType, server, db, usr, pwd);
-		result = DBTool.select("administrators", "*", "WHERE login = '" + login + "' and password = '" + pwdSQL + "'");
-		
-		if(result.next()) {
-			resultBool = true;
-			administrator = result.getString("login");
+		result = DBTool.select("administrators", "*", "WHERE login = '" + login + "'");
+
+		if (result.next()) {
+			if (pwdSQL.equals(result.getString("password"))) {
+				resultBool = true;
+				administrator = result.getString("login");
+				WindowManager.getInstance().promptAlert("Welcome, " + administrator + "!");
+			}
 		}
-		
+
 		DBTool.closeConnection();
 		return resultBool;
 	}
-	
+
 }

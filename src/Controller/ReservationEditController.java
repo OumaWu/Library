@@ -3,6 +3,7 @@ package Controller;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import Model.DatabaseManager;
@@ -26,6 +27,9 @@ public class ReservationEditController implements Initializable {
 	private static String nextId;
 	private boolean result = false;
 	private String bookId = "";
+	private String customerId = "";
+	private Date bookDate;
+	private Date returnDate;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -53,7 +57,8 @@ public class ReservationEditController implements Initializable {
 	public void openSelectBookWindow() {
 		try {
 			String bookType = cbBookType.getSelectionModel().getSelectedItem();
-			bookId = WindowManager.getInstance().openBookSelectWindow(library.getBooksByType(bookType));
+			if (bookType != "")
+				bookId = WindowManager.getInstance().openBookSelectWindow(library.getBooksByType(bookType));
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IOException
 				| SQLException e) {
 			// TODO Auto-generated catch block

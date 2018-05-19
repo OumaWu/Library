@@ -128,6 +128,20 @@ public class Library implements Cloneable, Iterable<Book> {
 	}
 
 	/**
+	 * find the next id of reservations
+	 * 
+	 * @return lastId + 1
+	 */
+	public String findNextReservationId() {
+		int lastId = 0;
+		for (Reservation reservation : reservations) {
+			if (lastId < reservation.getIntId())
+				lastId = reservation.getIntId();
+		}
+		return convertId(lastId + 1);
+	}
+
+	/**
 	 * find the next id of books
 	 * 
 	 * @return lastId + 1
