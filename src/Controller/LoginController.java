@@ -47,6 +47,8 @@ public class LoginController implements Initializable {
 					WindowManager.getInstance().promptAlert("Error! Wrong login or password!");
 			}
 
+			// this.openManagementWindow();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

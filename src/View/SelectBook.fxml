@@ -7,14 +7,14 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-
-<BorderPane fx:id="layout" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="Controller.SelectBookController">
+<BorderPane fx:id="layout" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SelectBookController">
    <center>
       <ListView fx:id="bookList" prefHeight="300.0" prefWidth="400.0" BorderPane.alignment="CENTER" />
    </center>
    <bottom>
-      <HBox alignment="CENTER_RIGHT" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER_RIGHT" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
+            <Button fx:id="btCancel" mnemonicParsing="false" onAction="#close" prefWidth="80.0" text="Cancel" />
             <Button fx:id="btOk" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#setSelectedBookId" prefWidth="80.0" text="Ok" />
          </children>
          <padding>
@@ -23,7 +23,7 @@
       </HBox>
    </bottom>
    <top>
-      <Label contentDisplay="CENTER" text="Select a book" BorderPane.alignment="CENTER">
+      <Label fx:id="lbTitle" contentDisplay="CENTER" text="Select a book" BorderPane.alignment="CENTER">
          <font>
             <Font name="Calibri" size="24.0" />
          </font>

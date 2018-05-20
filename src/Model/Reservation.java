@@ -1,19 +1,19 @@
 package Model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Reservation {
 	private String id;
 	private String bookId;
 	private String customerId;
-	private Date bookDate;
-	private Date returnDate;
+	private LocalDate bookDate;
+	private LocalDate returnDate;
 	private boolean returned;
 
 	public Reservation() {
 	}
 
-	public Reservation(String id, String bookId, String customerId, Date bookDate, Date returnDate) {
+	public Reservation(String id, String bookId, String customerId, LocalDate bookDate, LocalDate returnDate) {
 		super();
 		this.id = id;
 		this.bookId = bookId;
@@ -23,7 +23,8 @@ public class Reservation {
 		this.setReturned(false);
 	}
 
-	public Reservation(String id, String bookId, String customerId, Date bookDate, Date returnDate, boolean returned) {
+	public Reservation(String id, String bookId, String customerId, LocalDate bookDate, LocalDate returnDate,
+			boolean returned) {
 		super();
 		this.id = id;
 		this.bookId = bookId;
@@ -81,7 +82,7 @@ public class Reservation {
 	/**
 	 * @return the bookDate
 	 */
-	public Date getBookDate() {
+	public LocalDate getBookDate() {
 		return bookDate;
 	}
 
@@ -89,14 +90,14 @@ public class Reservation {
 	 * @param bookDate
 	 *            the bookDate to set
 	 */
-	public void setBookDate(Date bookDate) {
+	public void setBookDate(LocalDate bookDate) {
 		this.bookDate = bookDate;
 	}
 
 	/**
 	 * @return the returnDate
 	 */
-	public Date getReturnDate() {
+	public LocalDate getReturnDate() {
 		return returnDate;
 	}
 
@@ -104,7 +105,7 @@ public class Reservation {
 	 * @param returnDate
 	 *            the returnDate to set
 	 */
-	public void setReturnDate(Date returnDate) {
+	public void setReturnDate(LocalDate returnDate) {
 		this.returnDate = returnDate;
 	}
 

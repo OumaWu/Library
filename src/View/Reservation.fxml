@@ -38,7 +38,7 @@
             <Label text="Book :" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
             <Label text="Borrowing date :" GridPane.rowIndex="2" />
             <Label text="Return date :" GridPane.rowIndex="3" />
-            <ComboBox fx:id="cbCustomer" promptText="Select a customer" GridPane.columnIndex="1" />
+            <ComboBox fx:id="cbCustomer" promptText="Select a customer" onAction="#setSelectedCusomerId" GridPane.columnIndex="1" />
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <children>
                   <RadioButton mnemonicParsing="false" selected="true" text="Borrowing" HBox.hgrow="ALWAYS">
@@ -53,6 +53,7 @@
             <Label text="Status :" GridPane.rowIndex="4" />
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="15.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
+               	  <Label text="" fx:id="lbBook" />
                   <ComboBox fx:id="cbBookType" />
                   <Button fx:id="btSelectBook" mnemonicParsing="false" onAction="#openSelectBookWindow" prefWidth="80.0" text="Select..." />
                </children>
