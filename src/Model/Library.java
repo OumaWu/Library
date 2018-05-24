@@ -118,13 +118,27 @@ public class Library implements Cloneable, Iterable<Book> {
 		return bookTypes;
 	}
 
-	public List<Book> getBooksByType(String type) {
+	public List<Book> getAvailableBooksByType(String type) {
 		List<Book> books = new ArrayList<Book>();
 		for (Book book : this.books) {
-			if (book.getCategory().equalsIgnoreCase(type))
+			if (book.getCategory().equalsIgnoreCase(type) && book.getAvailability())
 				books.add(book);
 		}
 		return books;
+	}
+
+	/**
+	 * find the next id of reservations
+	 * 
+	 * @return lastId + 1
+	 */
+	public String findNextReservationId() {
+		int lastId = 0;
+		for (Reservation reservation : reservations) {
+			if (lastId < reservation.getIntId())
+				lastId = reservation.getIntId();
+		}
+		return convertId(lastId + 1);
 	}
 
 	/**

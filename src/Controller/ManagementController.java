@@ -89,7 +89,7 @@ public class ManagementController implements Initializable {
 			deleteBook();
 
 		else if (reservationTab.isSelected())
-			;
+			deleteReservation();
 	}
 
 	/**
@@ -113,6 +113,24 @@ public class ManagementController implements Initializable {
 			loadBooksTable();
 		}
 		WindowManager.getInstance().promptAlert("Delete book " + (result ? "with success !" : "failed !"));
+	}
+
+	/**
+	 * Delete a row selected from the reservation table
+	 * 
+	 * @throws SQLException
+	 */
+	public void deleteReservation() throws SQLException {
+		boolean result = false;
+		String id = reservationTable.getSelectionModel().getSelectedItem().getId();
+		result = DatabaseManager.reservationCRUD.deleteReservation(id);
+		if (result) {
+			library.remove(reservationTable.getSelectionModel().getSelectedItem());
+			loadReservationsTable();
+			retriveBooks();
+			loadBooksTable();
+		}
+		WindowManager.getInstance().promptAlert("Delete reservation " + (result ? "with success !" : "failed !"));
 	}
 
 	/**
@@ -164,6 +182,8 @@ public class ManagementController implements Initializable {
 			if (result) {
 				this.retriveReservations();
 				this.loadReservationsTable();
+				this.retriveBooks();
+				this.loadBooksTable();
 			}
 
 		} catch (IOException e) {

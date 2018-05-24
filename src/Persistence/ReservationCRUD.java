@@ -54,8 +54,8 @@ public class ReservationCRUD extends CRUDoperations {
 		values.put("id", reservation.getId());
 		values.put("book_id", reservation.getBookId());
 		values.put("customer_id", reservation.getCustomerId());
-		values.put("book_date", formatter.format(reservation.getBookDate()));
-		values.put("return_date", formatter.format(reservation.getReturnDate()));
+		values.put("book_date", reservation.getBookDate().toString());
+		values.put("return_date", reservation.getReturnDate().toString());
 		values.put("returned", String.valueOf(reservation.isReturned() ? 1 : 0));
 
 		DBTool.getConnection(dbType, server, db, usr, pwd);
@@ -76,8 +76,8 @@ public class ReservationCRUD extends CRUDoperations {
 			reservation.setId(rs.getString("id"));
 			reservation.setBookId(rs.getString("book_id"));
 			reservation.setCustomerId(rs.getString("customer_id"));
-			reservation.setBookDate(rs.getDate("book_date"));
-			reservation.setReturnDate(rs.getDate("return_date"));
+			reservation.setBookDate(rs.getDate("book_date").toLocalDate());
+			reservation.setReturnDate(rs.getDate("return_date").toLocalDate());
 			reservation.setReturned(rs.getBoolean("returned"));
 			reservations.add(reservation);
 		}

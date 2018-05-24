@@ -112,6 +112,16 @@ public class Customer implements Comparable<Customer> {
 		return true;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return id + " " + firstName + ", " + lastName.toUpperCase();
+	}
+
 	public int getIntId() {
 		return Integer.parseInt(this.id);
 	}

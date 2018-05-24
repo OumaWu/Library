@@ -100,17 +100,18 @@ public class WindowManager {
 		Parent root = loader.load();
 		ReservationEditController controller = loader.<ReservationEditController> getController();
 		controller.setLibrary(library);
+		controller.setComboBoxValues();
+		controller.setBinding();
 		Stage stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.setTitle("Create a book reservation");
 		stage.setScene(new Scene(root));
-		controller.setComboBoxValues();
 		stage.showAndWait();
 
 		return controller.getResult();
 	}
 
-	public String openBookSelectWindow(List<Book> books)
+	public String openBookSelectWindow(List<Book> books, String type)
 			throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/SelectBook.fxml"));
 		Parent root = loader.load();
@@ -118,6 +119,7 @@ public class WindowManager {
 		controller.setBooks(books);
 		controller.setBookListAndIds();
 		controller.setBinding();
+		controller.setLabel("Available " + type + "s");
 		Stage stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.setTitle("Select a book");

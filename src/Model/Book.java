@@ -140,6 +140,16 @@ public abstract class Book implements Comparable<Book>, Cloneable {
 		return true;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return id + "\t" + title + ", " + author;
+	}
+
 	@Override
 	public int compareTo(Book o) {
 		return new Integer(getIntId()).compareTo(o.getIntId());

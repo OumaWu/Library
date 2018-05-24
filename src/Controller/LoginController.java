@@ -30,25 +30,29 @@ public class LoginController implements Initializable {
 	@FXML
 	public void loginProcess() {
 		boolean result;
-		
+
 		try {
-			String login = tfLogin.getText();
+			String login = tfLogin.getText().trim();
 			String pwd = tfPassword.getText();
-			
-			//Check if the user is registered
-			result = DatabaseManager.administratorCRUD.loginAdministrator(login, pwd);
-			
-			if(result)
-				this.openManagementWindow();
-			else
-				WindowManager.getInstance().promptAlert("Error! Wrong login or password!");
-				
-			
-		}catch(Exception e) {
+
+			if (login.isEmpty() || pwd.isEmpty()) {
+				WindowManager.getInstance().promptAlert("Plase fill in all the field!");
+			} else {
+				// Check if the user is registered
+				result = DatabaseManager.administratorCRUD.loginAdministrator(login, pwd);
+
+				if (result)
+					this.openManagementWindow();
+				else
+					WindowManager.getInstance().promptAlert("Error! Wrong login or password!");
+			}
+
+			// this.openManagementWindow();
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
+
 	}
 
 	@FXML

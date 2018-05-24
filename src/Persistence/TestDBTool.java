@@ -4,8 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashMap;
 
 import Model.Customer;
@@ -64,11 +63,9 @@ public class TestDBTool {
 
 	public static void updateReservationTest() {
 		ReservationCRUD crud = new ReservationCRUD();
-
-		Date bookD = new Date();
-		Date returnD = new Date();
-		bookD.setTime(Calendar.getInstance().getTimeInMillis());
-		returnD.setTime(Calendar.getInstance().getTimeInMillis() + 186400000);
+		LocalDate date = LocalDate.now();
+		LocalDate bookD = date;
+		LocalDate returnD = LocalDate.of(date.getYear(), date.getMonth(), date.getDayOfMonth() + 2);
 
 		Reservation r = new Reservation();
 		Reservation r2 = new Reservation();
@@ -122,10 +119,9 @@ public class TestDBTool {
 	public static void insertReservationTest() {
 		ReservationCRUD crud = new ReservationCRUD();
 
-		Date bookD = new Date();
-		Date returnD = new Date();
-		bookD.setTime(Calendar.getInstance().getTimeInMillis());
-		returnD.setTime(Calendar.getInstance().getTimeInMillis() + 186400000);
+		LocalDate date = LocalDate.now();
+		LocalDate bookD = date;
+		LocalDate returnD = LocalDate.of(date.getYear(), date.getMonth(), date.getDayOfMonth() + 2);
 
 		Reservation r = new Reservation();
 		r.setId("11111");
