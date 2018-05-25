@@ -1,0 +1,859 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>5</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1100</x>
+      <y>475</y>
+      <w>105</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Package::Model
+Book
+--
+-id: int
+-title: String
+-author: String
+-category: String
+-availabitlity: boolean
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1230</x>
+      <y>435</y>
+      <w>105</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Package::Model
+Reservation
+--
+-id: String
+-bookId: String
+-customerId: String
+-bookDate: Date
+-returnDate: Date
+-returned: boolean
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>420</x>
+      <y>300</y>
+      <w>260</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Package::Model
+DatabaseManager
+--
+-instance: DatabaseManager
++customerCRUD: CustomerCRUD
++bookCRUD: BookCRUD
++reservationCRUD: ReservationCRUD
++administratorCRUD: AdministratorCRUD
+--
++configCRUDInstance(dbType:int, server:String, db: String, usr:String, pwd:String)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>320</x>
+      <y>535</y>
+      <w>105</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Package::Persistence
+BookCRUD
+--
+-books: List
+--
++deleteBook(id: String): boolean
++insertBook(id: String): boolean
++retrieveBooks(): List
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>655</x>
+      <y>535</y>
+      <w>105</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Package::Persistence
+ReservationCRUD
+--
+-reservations: List
+--
++deleteReservation(): boolean
++insertReservation(): boolean
++retrieveReservations(): List
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>480</x>
+      <y>535</y>
+      <w>120</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Package::Persistence
+CustomerCRUD
+--
+-customers: List
+--
++deleteCustomer(id: String):boolean
++insertCustomer(id: String):boolean
++retreveCustomer(): List
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>485</x>
+      <y>665</y>
+      <w>105</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;abstract&gt;&gt;
+Package::Persistence
+CRUDoperations
+--
+#dbType: int
+#server: String
+#db: String
+#usr: String
+#pwd: String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>535</x>
+      <y>590</y>
+      <w>15</w>
+      <h>85</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;150.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>365</x>
+      <y>590</y>
+      <w>190</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;10.0;10.0;70.0;360.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>540</x>
+      <y>615</y>
+      <w>180</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>340.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>705</x>
+      <y>590</y>
+      <w>15</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1090</x>
+      <y>285</y>
+      <w>115</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>Package::Model
+Library
+--
+
+--
++add(book; Book): boolean
++remove(id: String): boolean
++remove(book: Book): boolean
++removeAll(books: List): boolean
++findNextCustomerId(): String
+-convertId(nextId: String)
++findByTitle(title: String): List
++findByAuthor(author: String): List</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>980</x>
+      <y>435</y>
+      <w>105</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>Package::Model
+Customer
+--
+-id: String
+-firstName: String
+-lastName: String
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1145</x>
+      <y>380</y>
+      <w>15</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1105</x>
+      <y>590</y>
+      <w>105</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>Package::Model
+Manuel
+--
+
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>990</x>
+      <y>590</y>
+      <w>105</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>Package::Model
+Novel
+--
+
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1220</x>
+      <y>590</y>
+      <w>105</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>Package::Model
+Magazine
+--
+
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1150</x>
+      <y>540</y>
+      <w>15</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1035</x>
+      <y>555</y>
+      <w>130</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;70.0;10.0;10.0;240.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>775</x>
+      <y>760</y>
+      <w>110</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>Package::application
+App
+--
+
+--
++start(primaryStage: Stage): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>775</x>
+      <y>670</y>
+      <w>110</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>Package::view
+Login
+--
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>790</x>
+      <y>145</y>
+      <w>110</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>Package::view
+BookEdit
+--
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>965</x>
+      <y>145</y>
+      <w>110</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>Package::view
+CustomerEdit
+--
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>780</x>
+      <y>435</y>
+      <w>110</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>Package::view
+Management
+--
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>635</x>
+      <y>145</y>
+      <w>110</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>Package::view
+Reservation
+--
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>780</x>
+      <y>530</y>
+      <w>105</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>Package::Controller
+LoginController
+--
+-vBox: VBox
+-tfLogin: TextField
+-tfPassword: TextField
+-btLogin: Button
+-btExit: Button
+--
++intialiaze(location: URL, resources: ResourceBundle): void
++loginProcess(): void
++close(): void
++openManagementWindow(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>825</x>
+      <y>625</y>
+      <w>60</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1
+controlled by &gt;</panel_attributes>
+    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>830</x>
+      <y>475</y>
+      <w>15</w>
+      <h>65</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>785</x>
+      <y>285</y>
+      <w>105</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>Package::Controller
+ManagementController
+--
+-library: Library
+--
++initialize(): void
++openWindow(): void
++deleteOption(): void
++deleteBook(): void
++deleteCustomer(): void
++deleteReservation(): void
++loadBooksTable(): void
++initialiseBooksTable(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>830</x>
+      <y>380</y>
+      <w>55</w>
+      <h>65</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1
+controlled by</panel_attributes>
+    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>885</x>
+      <y>330</y>
+      <w>215</w>
+      <h>25</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1
+</panel_attributes>
+    <additional_attributes>10.0;20.0;410.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1025</x>
+      <y>400</y>
+      <w>135</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=0..*</panel_attributes>
+    <additional_attributes>250.0;10.0;10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1150</x>
+      <y>555</y>
+      <w>135</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>250.0;70.0;250.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1145</x>
+      <y>400</y>
+      <w>25</w>
+      <h>85</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=0..*</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1145</x>
+      <y>400</y>
+      <w>160</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=0...*</panel_attributes>
+    <additional_attributes>10.0;10.0;280.0;10.0;280.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>825</x>
+      <y>710</y>
+      <w>15</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>535</x>
+      <y>375</y>
+      <w>15</w>
+      <h>115</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;210.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>365</x>
+      <y>470</y>
+      <w>185</w>
+      <h>75</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1
+</panel_attributes>
+    <additional_attributes>350.0;20.0;10.0;20.0;10.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>535</x>
+      <y>475</y>
+      <w>15</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>535</x>
+      <y>475</y>
+      <w>185</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>10.0;10.0;350.0;10.0;350.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>865</x>
+      <y>185</y>
+      <w>165</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=0..*</panel_attributes>
+    <additional_attributes>10.0;200.0;310.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>845</x>
+      <y>185</y>
+      <w>25</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=0..*</panel_attributes>
+    <additional_attributes>10.0;200.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>685</x>
+      <y>185</y>
+      <w>140</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..*
+m2=1</panel_attributes>
+    <additional_attributes>10.0;10.0;260.0;200.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>675</x>
+      <y>325</y>
+      <w>120</w>
+      <h>25</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1
+</panel_attributes>
+    <additional_attributes>10.0;20.0;220.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>760</x>
+      <y>15</y>
+      <w>165</w>
+      <h>75</h>
+    </coordinates>
+    <panel_attributes>Package: Controller
+BookEditController
+--
+-bookCRUD: BookCRUD
+-nextId: String
+-result: boolean
+--
++initialize(arg0: URL, arg1: ResourceBundle): void
++insertBook(): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>840</x>
+      <y>85</y>
+      <w>15</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>950</x>
+      <y>15</y>
+      <w>165</w>
+      <h>75</h>
+    </coordinates>
+    <panel_attributes>Package: Controller
+CustomerEditController
+--
+-customerCRUD: CustomerCRUD
+-nextId: String
+-result: boolean
+--
++initialize(arg0: URL, arg1: ResourceBundle): void
++insertCustomer(): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1020</x>
+      <y>85</y>
+      <w>15</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>575</x>
+      <y>15</y>
+      <w>165</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>Package: Controller
+ReservationEditController
+--
+-reservationCRUD: ReservationCRUD
+-library: Library
+-nextId: String
+-result: boolean
+-bookId: String
+--
++initialize(arg0: URL, arg1: ResourceBundle): void
++openSelectBookWindow(): void
++insertReservation(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>685</x>
+      <y>100</y>
+      <w>15</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>390</x>
+      <y>770</y>
+      <w>290</w>
+      <h>165</h>
+    </coordinates>
+    <panel_attributes>Package::Persistence
+DBTool
+--
++MYSQL: int
++ORACLE : int
+-dbInstance: DBTool
+-dbType: int
+-driver: String
+-conn: Connection
+-stmt: Statement
+-pstmt: PreparedStatement
+--
+-DBTool(dbType: int)
++delete(table: String, where: String): boolean
++update(table: String, values: HashMap, where: HashMap): boolean
++insert(table: String, values: HashMap): boolean
++select(table: String, columns: String[], where: String): ResultSet
++select(table: String, column: String, where: String): ResultSet
++selectAll(table: String): ResultSet
++closeConnection(): void
++getConnection(dbType: int, server: String, db: String, usr: String, pwd: String): Connection
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>175</x>
+      <y>535</y>
+      <w>105</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>Package::Persistence
+AdministratorCRUD
+--
+-administrator: String
+--
++loginAdministrator(login: String, pwdSQL: String): boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>220</x>
+      <y>440</y>
+      <w>330</w>
+      <h>105</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1
+</panel_attributes>
+    <additional_attributes>640.0;20.0;10.0;20.0;10.0;190.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>220</x>
+      <y>575</y>
+      <w>160</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;10.0;10.0;100.0;300.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>535</x>
+      <y>730</y>
+      <w>15</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+</diagram>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>720</x>
+      <y>10</y>
+      <w>140</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Package:view
+Reservation
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>610</x>
+      <y>160</y>
+      <w>330</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>Package: Controller
+ReservationEditController
+--
+-reservationCRUD: ReservationCRUD
+-library: Library
+-nextId: String
+-result: boolean
+-bookId: String
+--
++initialize(arg0: URL, arg1: ResourceBundle): void
++openSelectBookWindow(): void
++insertReservation(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>780</x>
+      <y>50</y>
+      <w>110</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1
+controlled by</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>480</x>
+      <y>660</y>
+      <w>580</w>
+      <h>250</h>
+    </coordinates>
+    <panel_attributes>Package::Persistence
+DBTool
+--
++MYSQL: int
++ORACLE : int
+-dbInstance: DBTool
+-dbType: int
+-driver: String
+-conn: Connection
+-stmt: Statement
+-pstmt: PreparedStatement
+--
+-DBTool(dbType: int)
++insert(table: String, values: HashMap): boolean
++closeConnection(): void
++getConnection(dbType: int, server: String, db: String, usr: String, pwd: String): Connection
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>680</x>
+      <y>450</y>
+      <w>210</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Package::Persistence
+ReservationCRUD
+--
+-reservations: List
+--
++deleteReservation(): boolean
++insertReservation(): boolean
++retrieveReservations(): List
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>780</x>
+      <y>340</y>
+      <w>160</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1
+sends controlled data</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>780</x>
+      <y>560</y>
+      <w>160</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1
+sends formatted data</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+</diagram>
