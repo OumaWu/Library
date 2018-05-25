@@ -50,7 +50,7 @@ public class BookCRUD extends CRUDoperations {
 		books.clear();
 
 		while (rs.next()) {
-			String bookType = rs.getString("category").toLowerCase();
+			String bookType = rs.getString("category");
 			// String className = "Model." + bookType.substring(0,
 			// 1).toUpperCase() + bookType.substring(1);
 

@@ -114,7 +114,8 @@ public class ReservationEditController implements Initializable {
 			List<Book> books = library.getAvailableBooksByType(bookType);
 			if (!books.isEmpty()) {
 				SelectedbookId = WindowManager.getInstance().openBookSelectWindow(books, bookType);
-				lbBook.setText(library.getBook(SelectedbookId).getTitle());
+				if (!SelectedbookId.isEmpty())
+					lbBook.setText(library.getBook(SelectedbookId).getTitle());
 			}
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IOException
 				| SQLException e) {

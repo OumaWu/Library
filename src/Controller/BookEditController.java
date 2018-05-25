@@ -1,7 +1,6 @@
 package Controller;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import Model.Book;
@@ -44,7 +43,7 @@ public class BookEditController implements Initializable {
 	@FXML
 	private RadioButton rbNovel, rbManuel, rbMagazine;
 
-	public void insertBook() throws SQLException {
+	public void insertBook() throws Exception {
 		// ((RadioButton) bookType.getSelectedToggle()).getText()
 
 		boolean result = false;
@@ -62,6 +61,7 @@ public class BookEditController implements Initializable {
 			book.setId(nextId);
 			book.setTitle(title);
 			book.setAuthor(author);
+			book.setCategory(bookType);
 			book.setAvailability(true);
 
 			result = bookCRUD.insertBook(book);
