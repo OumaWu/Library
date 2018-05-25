@@ -1,14 +1,11 @@
 package Controller;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import Model.Book;
 import Model.DatabaseManager;
-import Model.Magazine;
-import Model.Manuel;
-import Model.Novel;
+import Model.Factory.BookFactory;
 import Persistence.BookCRUD;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -46,30 +43,26 @@ public class BookEditController implements Initializable {
 	@FXML
 	private RadioButton rbNovel, rbManuel, rbMagazine;
 
-	public void insertBook() throws SQLException {
+	public void insertBook() throws Exception {
 		// ((RadioButton) bookType.getSelectedToggle()).getText()
 
 		boolean result = false;
 		String title = tfTItle.getText();
 		String author = tfAuthor.getText();
 		RadioButton selected = (RadioButton) bookType.getSelectedToggle();
-		String bookType = selected.getText().toUpperCase();
+		String bookType = selected.getText();
 
 		if (title.isEmpty() || author.isEmpty()) {
 			WindowManager.getInstance().promptAlert("Please fill all the fields in the form !");
 		} else {
-			Book book = null;
-			switch (bookType) {
-			case "NOVEL":
-				book = new Novel(nextId, title, author);
-				break;
-			case "MANUEL":
-				book = new Manuel(nextId, title, author);
-				break;
-			case "MAGAZINE":
-				book = new Magazine(nextId, title, author);
-				break;
-			}
+
+			// Factory pattern
+			Book book = BookFactory.createBook(bookType);
+			book.setId(nextId);
+			book.setTitle(title);
+			book.setAuthor(author);
+			book.setCategory(bookType);
+			book.setAvailability(true);
 
 			result = bookCRUD.insertBook(book);
 			WindowManager.getInstance().promptAlert("Create book " + (result ? "with success !" : "failed"));

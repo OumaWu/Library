@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import Model.Book;
+import Model.Factory.BookFactory;
 
 public class BookCRUD extends CRUDoperations {
 
@@ -49,11 +50,12 @@ public class BookCRUD extends CRUDoperations {
 		books.clear();
 
 		while (rs.next()) {
-			String bookType = rs.getString("category").toLowerCase();
-			String className = "Model." + bookType.substring(0, 1).toUpperCase() + bookType.substring(1);
+			String bookType = rs.getString("category");
+			// String className = "Model." + bookType.substring(0,
+			// 1).toUpperCase() + bookType.substring(1);
 
-			// Java Reflection
-			Book book = (Book) Class.forName(className).newInstance();
+			// FactoryMethod
+			Book book = BookFactory.createBook(bookType);
 			book.setId(rs.getString("id"));
 			book.setTitle(rs.getString("title"));
 			book.setAuthor(rs.getString("author"));
@@ -73,11 +75,13 @@ public class BookCRUD extends CRUDoperations {
 		DBTool.getConnection(dbType, server, db, usr, pwd);
 		ResultSet rs = DBTool.select("books", "*", "WHERE type like " + type);
 		books.clear();
+
 		// Cast the passed type string to class name with package
-		String className = "Model." + type.substring(0, 1).toUpperCase() + type.substring(1).toLowerCase();
+		// String className = "Model." + type.substring(0, 1).toUpperCase() +
+		// type.substring(1).toLowerCase();
 
 		while (rs.next()) {
-			Book book = (Book) Class.forName(className).newInstance();
+			Book book = BookFactory.createBook(type);
 			book.setId(rs.getString("id"));
 			book.setTitle(rs.getString("title"));
 			book.setAuthor(rs.getString("author"));
